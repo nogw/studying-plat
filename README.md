@@ -1,6 +1,6 @@
 # studying-plat
 
-[ ] login 
-[ ] register
-[ ] exercise time
-[ ] exercise validate
+- [ ] login 
+- [ ] register
+- [ ] exercise time
+- [ ] exercise validate
