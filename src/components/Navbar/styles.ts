@@ -5,11 +5,17 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  justify-self: center;
+  width: 100vw;
+  margin-bottom: 20px;
+  
+  .box {
+    flex: 1;
+  }
+  
   .title {
     display: flex;
     align-items: center;
-    border: 1px solid red;
 
     h1 {
       margin-left: 8px;
@@ -23,40 +29,48 @@ export const Container = styled.div`
   .nav {
     display: flex;
     align-items: center;
-    gap: 16px;
-    border: 1px solid red;
-
-    a {
-      background-color: #2b2b2b;
-      border-radius: 8px;
-      padding: 8px 16px;
-      color: #fff;
-      font-size: 14px;
-      text-decoration: none;
-      font-weight: bold;
-    }
+    gap: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .profile {
-    background-color: #2b2b2b;
+    background-color: #202225;
     border-radius: 50%;
     height: 36px;
     width: 36px;
-    border: 1px solid red;
+    margin-left: auto;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
     h1 {
-      font-size: 14px;
+      font-size: 16px;
       color: #fff;
     }
   }
 `;
 
+interface NavBtnProps {
+  active: boolean
+}
+
+export const NavBtn = styled.div<NavBtnProps>`
+  a {
+    background-color: ${props => props.active ? "#768BD4" : "#202225"};
+    border-radius: 8px;
+    padding: 8px 16px;
+    color: #fff;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+`;
+
 export const Icon = styled.div`
-  background-color: #2b2b2b;
+  background-color: #202225;
   border-radius: 10px;
   height: 36px;
   width: 36px;
