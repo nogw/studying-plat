@@ -6,17 +6,8 @@ export const Container = styled.div`
   padding: 16px 20px;
   margin-bottom: 20px;
   width: 600px;
-
-  h1 {
-    color: #fff;
-    font-family: "Roboto Mono";
-    margin-bottom: 16px;
-  }
-
-  p {
-    color: #fff;
-    font-family: "Roboto Mono";
-  }
+  color: #fff;
+  font-family: "Roboto Mono";
 
   @media screen and (max-width: 640px) {
     width: 100%;
