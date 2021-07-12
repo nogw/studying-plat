@@ -6,6 +6,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  width: 100%;
   gap: 20px;
 
   h1 {
@@ -14,6 +15,7 @@ export const Container = styled.div`
 `;
 
 export const ChallengesContainer = styled.div `
+  width: 100%;
   h1 {
     font-size: 14px;
     color: #b1b1b1;
@@ -30,5 +32,9 @@ export const ChallengesList = styled.div `
   ${ContainerC}:not(:last-child) {
     border-bottom: 1px solid #26282b;
     border-spacing: 20px 20px;
+  }
+
+  @media screen and (max-width: 640px) {
+    width: 100%;
   }
 `

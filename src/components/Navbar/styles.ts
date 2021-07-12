@@ -1,12 +1,10 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  padding: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  justify-self: center;
-  width: 100vw;
+  width: 100%;
   margin-bottom: 20px;
   
   .box {
@@ -37,7 +35,7 @@ export const Container = styled.div`
 
   .profile {
     background-color: #202225;
-    border-radius: 50%;
+    border-radius: 12px;
     height: 36px;
     width: 36px;
     margin-left: auto;
@@ -49,6 +47,12 @@ export const Container = styled.div`
     h1 {
       font-size: 16px;
       color: #fff;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .nav {
+      display: none;
     }
   }
 `;
