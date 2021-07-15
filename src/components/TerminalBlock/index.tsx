@@ -1,13 +1,12 @@
 import { Container } from './styles';
 
-function TerminalBlock() {
+function TerminalBlock({ text }) {
   return (
     <Container>
       <code>
         {`C:/Users/user>python arquive.py
-value: 2
-value: 6
-8`}
+`}
+        {text}
       </code>
     </Container>
   );

@@ -14,7 +14,7 @@ var _default = {
     "color": "#c3cee3",
     "background": "#25282b",
     "fontFamily": "Roboto Mono, monospace",
-    "fontSize": "1em",
+    "fontSize": "0.95em",
     "lineHeight": "1.5em",
     "MozTabSize": "4",
     "OTabSize": "4",
@@ -45,7 +45,6 @@ var _default = {
     "hyphens": "none",
     "overflow": "auto",
     "position": "relative",
-    "margin": "0.5em 0",
     "padding": "1.25em 1em"
   },
   "code[class*=\"language-\"]::-moz-selection": {

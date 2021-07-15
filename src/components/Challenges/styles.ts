@@ -6,11 +6,14 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 100%;
   gap: 20px;
 
   h1 {
     color: #fff;
+  }
+
+  @media screen and (max-width: 640px) {
+    width: 100%;
   }
 `;
 

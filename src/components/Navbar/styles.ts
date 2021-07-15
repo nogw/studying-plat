@@ -5,10 +5,38 @@ export const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   
   .box {
     flex: 1;
+  }
+
+  .box.last {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    
+    .navbtn {
+      display: none;
+      align-items: center;
+      
+      .icon {
+        cursor: pointer;
+        color: #fff;
+        font-size: 26px;
+      }
+
+      &:active {
+        filter: brightness(0.8);
+        transform: rotate(180deg);
+      }
+    }
+
+    @media screen and (max-width: 640px) {
+      .navbtn {
+        display: flex;
+      }
+    }
   }
   
   .title {

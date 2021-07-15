@@ -3,6 +3,7 @@ import { Container, Icon, NavBtn } from './styles';
 import Link from 'next/link'
 
 import { useRouter } from 'next/router'
+import { RiBarChartHorizontalLine } from 'react-icons/ri'
 
 function Navbar() {
   const router = useRouter()
@@ -41,9 +42,12 @@ function Navbar() {
         </div>
       </div>
 
-      <div className="box">
+      <div className="box last">
         <div className="profile">
           <h1>AL</h1>
+        </div>
+        <div className="navbtn">
+          <RiBarChartHorizontalLine className="icon"/>
         </div>
       </div>
     </Container>
