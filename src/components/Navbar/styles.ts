@@ -101,6 +101,26 @@ export const NavBtn = styled.div<NavBtnProps>`
   }
 `;
 
+export const NavBtnMbl = styled.div<NavBtnProps>`
+  width: 100%;
+  background-color: ${props => props.active ? "#768BD4" : "#25282b"};
+  border-radius: 6px;
+  padding: 10px 16px;
+  border: 2px solid #25282b;
+
+  display: flex;
+  justify-content: center;
+
+  color: #fff;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: bold;
+
+  &:active {
+    border: 2px solid #768BD4
+  }
+`;
+
 export const Icon = styled.div`
   background-color: #202225;
   border-radius: 10px;
@@ -116,3 +136,63 @@ export const Icon = styled.div`
     font-size: 20px;
   }
 `;
+
+interface PropsMobileNav {
+  showNav: boolean
+}
+
+export const MobileNav = styled.div<PropsMobileNav>`
+  transition: all 300ms ease;
+  transform: ${props => props.showNav ? "translateX(0px)" : "translateX(calc(100% + 20px))"};
+  
+  display: flex;
+  flex-direction: column;
+
+  background-color: #202225;
+  border-radius: 6px;
+
+  margin: 20px 20px 20px 20px;
+  padding: 20px;
+  z-index: 999;
+  gap: 12px;
+  
+  position: fixed;
+  right: 0px;
+  left: 0px;
+  top: 0px;
+
+  .icon {
+    cursor: pointer;
+    color: #fff;
+    font-size: 26px;
+    margin-bottom: 8px;
+    margin-left: auto;
+    transform: rotate(180deg);
+
+    &:active {
+      filter: brightness(0.8);
+      transform: rotate(0deg);
+    }
+  }
+
+  @media screen and (min-width: 700px) {
+    display: none;
+  }
+`;
+
+export const BackgroundToNavMobile = styled.div<PropsMobileNav>`
+  @media screen and (min-width: 700px) {
+    display: none;
+  }
+
+  transition: all 300ms ease;
+  pointer-events: ${props => props.showNav ? "all" : "none"};;
+  opacity: ${props => props.showNav ? 1 : 0};
+  background-color: rgba(0,0,0,0.5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 998;
+`

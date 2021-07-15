@@ -7,7 +7,7 @@ export const Container = styled.div`
 
   code {
     white-space: pre-wrap;
-    font-size: 14px;
+    font-size: 1em;
     color: #fff;
   }
 `;
