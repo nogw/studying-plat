@@ -4,3 +4,4 @@
 - [ ] register
 - [ ] exercise time
 - [ ] exercise validate
+- [ ] markdown challenges
