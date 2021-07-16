@@ -9,6 +9,7 @@ export const Container = styled.div`
   font-family: "Roboto Mono";
   display: flex;
   flex-direction: column;
+  position: relative;
   gap: 18px;
   
   /* margin-bottom: 100px; */
@@ -63,41 +64,95 @@ export const Container = styled.div`
 `;
 
 export const ModalCancelChallengeContainer = styled.div`
-  .modal {
-    background-color: #202225;
-    border-radius: 8px;
-    padding: 20px 20px;
-    margin: 32px;
+  position: fixed;
+  z-index: 999;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  
+  background-color: #202225;
+  border-radius: 16px;
+  font-family: Roboto;
+  color: #fff;
+  gap: 22px;
 
-    color: #fff;
-    font-family: "Roboto Mono";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 26px;
+  width: 310px;
+
+  h1 {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  button {
+    padding: 8px 8px 9px 8px;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 4px;
+    outline: none;
+    width: 80%;
     
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    font-family: Roboto;
+    color: #e63946;
+    border : 2px solid #e63946;
+    font-weight: 900;
+    transition: 200ms ease all;
+  }
 
-    gap: 18px;
-    z-index: 999;
+  @media screen and (max-width: 320px) {
+    width: 90%;
+  }
+`;
 
-    h1 {
-      font-size: 16px;
-      text-align: center;
-    }
+export const ModalToSendCodeSolution = styled.div`
+  position: fixed;
+  z-index: 999;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  
+  background-color: #202225;
+  border-radius: 16px;
+  font-family: Roboto;
+  color: #fff;
+  gap: 22px;
 
-    button {
-      padding: 8px 8px 9px 8px;
-      background-color: transparent;
-      cursor: pointer;
-      border-radius: 4px;
-      outline: none;
-      width: 80%;
-      
-      font-family: Roboto;
-      color: #e63946;
-      border : 2px solid #e63946;
-      font-weight: 900;
-      transition: 200ms ease all;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 26px;
+  width: 410px;
+
+  h1 {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  button {
+    padding: 8px 8px 9px 8px;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 4px;
+    outline: none;
+    width: 80%;
+    
+    font-family: Roboto;
+    color: #90be6d;
+    border : 2px solid #90be6d;
+    font-weight: 900;
+    transition: 200ms ease all;
+  }
+
+  .code {
+    width: 100%;
+  }
+
+  @media screen and (max-width: 450px) {
+    width: 90%;
   }
 `;

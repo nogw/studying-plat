@@ -1,13 +1,16 @@
 import CodeBlock from '../CodeBlock';
-import TerminalBlock from '../TerminalBlock';
+
 import { 
   Container,
-  ModalCancelChallengeContainer 
+  ModalCancelChallengeContainer,
+  ModalToSendCodeSolution 
 } from './styles';
 
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import ReactMarkdown from 'react-markdown'
 import { BackgroundToNavMobile } from '../Navbar/styles';
 import { useState } from 'react';
+import materialOceanic from '../CodeBlock/theme'
 
 const markdown = `
   # Python API
@@ -31,16 +34,38 @@ const markdown = `
 const ModalCancelChallenge = () => {
   return (
     <ModalCancelChallengeContainer>
-      <div className="modal">
-        <h1>voce tem certeza que deseja cancelar o desafio?</h1>
-        <button>CANCELAR</button>
-      </div>
+      <h1>voce tem certeza que deseja cancelar o desafio?</h1>
+      <button>CANCELAR</button>
     </ModalCancelChallengeContainer>
+  )
+}
+
+const ModalSendCode = () => {
+  return (
+    <ModalToSendCodeSolution>
+      <h1>Cole seu codigo aqui!</h1>
+      <div className="code">
+      <SyntaxHighlighter
+        style={materialOceanic}
+        language="python"
+      >
+        {
+          `def recur_fibo(n):
+  if n <= 1:
+    return n
+  else:
+    return(recur_fibo(n-1) + recur_fibo(n-2))`
+        }
+      </SyntaxHighlighter>
+      </div>
+      <button>ENVIAR</button>
+    </ModalToSendCodeSolution>
   )
 }
 
 function Challenge() {
   const [show, setShow] = useState(false)
+  const [showCode, setShowCode] = useState(false)
 
   return (
     <>
@@ -49,11 +74,19 @@ function Challenge() {
           <ModalCancelChallenge/>
         ) 
       }
+      {
+        showCode && (
+          <ModalSendCode/>
+        )
+      }
       <Container>
-      <BackgroundToNavMobile showNav={show} onClick={() => setShow(!show)}/>
+        <BackgroundToNavMobile showNav={show || showCode} onClick={() => {
+          setShow(false) 
+          setShowCode(false)
+        }}/>
         <ReactMarkdown components={CodeBlock} children={markdown}/>
         <div className="buttons">
-          <button className="send" onClick={() => setShow(!show)}>ENVIAR SOLUÇÃO</button>
+          <button className="send" onClick={() => setShowCode(!showCode)}>ENVIAR SOLUÇÃO</button>
           <button className="cancel" onClick={() => setShow(!show)}>CANCELAR DESAFIO</button>
         </div>
       </Container>
