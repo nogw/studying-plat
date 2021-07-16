@@ -49,8 +49,8 @@ function Challenge() {
           <ModalCancelChallenge/>
         ) 
       }
-      <BackgroundToNavMobile showNav={show} onClick={() => setShow(!show)}/>
       <Container>
+      <BackgroundToNavMobile showNav={show} onClick={() => setShow(!show)}/>
         <ReactMarkdown components={CodeBlock} children={markdown}/>
         <div className="buttons">
           <button className="send" onClick={() => setShow(!show)}>ENVIAR SOLUÇÃO</button>

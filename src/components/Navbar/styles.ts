@@ -181,10 +181,6 @@ export const MobileNav = styled.div<PropsMobileNav>`
 `;
 
 export const BackgroundToNavMobile = styled.div<PropsMobileNav>`
-  @media screen and (min-width: 700px) {
-    display: none;
-  }
-
   transition: all 300ms ease;
   pointer-events: ${props => props.showNav ? "all" : "none"};;
   opacity: ${props => props.showNav ? 1 : 0};
