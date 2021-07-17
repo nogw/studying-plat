@@ -10,14 +10,6 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import ReactMarkdown from 'react-markdown'
 import { BackgroundToNavMobile } from '../Navbar/styles';
 import { useState } from 'react';
-import materialOceanic from '../CodeBlock/theme'
-
-import Editor from 'react-simple-code-editor';
-
-import { highlight, languages } from 'prismjs';
-import 'prismjs/components/prism-markup';
-import 'prismjs/components/prism-python';
-import 'prismjs/themes/prism-dark.css';
 
 const markdown = `
   # Python API
@@ -39,46 +31,24 @@ const markdown = `
 `
 
 const ModalCancelChallenge = () => {
-  const [code, setCode] = useState("")
   return (
     <ModalCancelChallengeContainer>
       <h1>voce tem certeza que deseja cancelar o desafio?</h1>
-      <Editor
-        className="editor"
-        value={code}
-        defaultValue={code}
-        onValueChange={code => setCode(code)}
-        highlight={code => highlight(code, languages.markup, 'markup')}
-        padding={15}
-      />
       <button>CANCELAR</button>
     </ModalCancelChallengeContainer>
   )
 }
 
-const ModalSendCode = () => {
-  const [content, setContent] = useState("")
-
-	const onCodeChange = (codeString) => {
-		setContent(codeString);
-	}
-
+const ModalSendCode = ({ code, setCode }) => {
   return (
     <ModalToSendCodeSolution>
       <h1>Cole seu codigo aqui!</h1>
-      <div 
-        className="code" 
-      >
-        <SyntaxHighlighter
-          style={materialOceanic}
-          language="python"
-          spellcheck="false"
-          contentEditable="true"
-          onChange={(e: any) => onCodeChange(e.target.value)}
-        >
-          {content}
-        </SyntaxHighlighter>
-      </div>
+        <textarea 
+          className="code" 
+          spellCheck="false"
+          value={code}
+          onChange={(e: any) => setCode(e.target.value)}
+        />
       <button>ENVIAR</button>
     </ModalToSendCodeSolution>
   )
@@ -87,6 +57,7 @@ const ModalSendCode = () => {
 function Challenge() {
   const [show, setShow] = useState(false)
   const [showCode, setShowCode] = useState(false)
+  const [code, setCode] = useState("")
 
   return (
     <>
@@ -97,7 +68,7 @@ function Challenge() {
       }
       {
         showCode && (
-          <ModalSendCode/>
+          <ModalSendCode code={code} setCode={setCode}/>
         )
       }
       <Container>

@@ -125,7 +125,7 @@ export const ModalToSendCodeSolution = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 26px;
+  padding: 26px 32px;
   width: 410px;
 
   h1 {
@@ -139,7 +139,7 @@ export const ModalToSendCodeSolution = styled.div`
     cursor: pointer;
     border-radius: 4px;
     outline: none;
-    width: 80%;
+    width: 100%;
     
     font-family: Roboto;
     color: #90be6d;
@@ -150,7 +150,15 @@ export const ModalToSendCodeSolution = styled.div`
 
   .code {
     outline: none;
+    resize: none;
+    background-color: #25282b;
+    border: none;
+    border-radius: 8px;
+    padding: 20px;
     width: 100%;
+    min-height: 200px;
+    color: #fff;
+    font-size: 16px;
   }
 
   @media screen and (max-width: 450px) {
