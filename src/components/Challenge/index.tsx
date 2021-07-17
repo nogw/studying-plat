@@ -12,6 +12,13 @@ import { BackgroundToNavMobile } from '../Navbar/styles';
 import { useState } from 'react';
 import materialOceanic from '../CodeBlock/theme'
 
+import Editor from 'react-simple-code-editor';
+
+import { highlight, languages } from 'prismjs';
+import 'prismjs/components/prism-markup';
+import 'prismjs/components/prism-python';
+import 'prismjs/themes/prism-dark.css';
+
 const markdown = `
   # Python API
   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero eius velit aut vel ut consequatur, magnam officiis. Adipisci magni, distinctio, consequatur totam voluptas praesentium a ad repellat, molestiae quasi eius.
@@ -32,31 +39,45 @@ const markdown = `
 `
 
 const ModalCancelChallenge = () => {
+  const [code, setCode] = useState("")
   return (
     <ModalCancelChallengeContainer>
       <h1>voce tem certeza que deseja cancelar o desafio?</h1>
+      <Editor
+        className="editor"
+        value={code}
+        defaultValue={code}
+        onValueChange={code => setCode(code)}
+        highlight={code => highlight(code, languages.markup, 'markup')}
+        padding={15}
+      />
       <button>CANCELAR</button>
     </ModalCancelChallengeContainer>
   )
 }
 
 const ModalSendCode = () => {
+  const [content, setContent] = useState("")
+
+	const onCodeChange = (codeString) => {
+		setContent(codeString);
+	}
+
   return (
     <ModalToSendCodeSolution>
       <h1>Cole seu codigo aqui!</h1>
-      <div className="code">
-      <SyntaxHighlighter
-        style={materialOceanic}
-        language="python"
+      <div 
+        className="code" 
       >
-        {
-          `def recur_fibo(n):
-  if n <= 1:
-    return n
-  else:
-    return(recur_fibo(n-1) + recur_fibo(n-2))`
-        }
-      </SyntaxHighlighter>
+        <SyntaxHighlighter
+          style={materialOceanic}
+          language="python"
+          spellcheck="false"
+          contentEditable="true"
+          onChange={(e: any) => onCodeChange(e.target.value)}
+        >
+          {content}
+        </SyntaxHighlighter>
       </div>
       <button>ENVIAR</button>
     </ModalToSendCodeSolution>

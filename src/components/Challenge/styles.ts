@@ -149,6 +149,7 @@ export const ModalToSendCodeSolution = styled.div`
   }
 
   .code {
+    outline: none;
     width: 100%;
   }
 
