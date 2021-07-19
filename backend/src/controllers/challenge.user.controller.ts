@@ -2,6 +2,8 @@ import { Request, Response } from 'express'
 import challengeAdminModel from '../models/challenge.admin.model'
 import challengeUserModel from '../models/challenge.user.model'
 
+// TODO: add completed challenge to user
+
 const sendChallengeSolve = async (req: Request, res: Response) => {
   const challengeExists = await challengeAdminModel.find({ _id: req.body.challengeId }).exec()
   if (!challengeExists) {
