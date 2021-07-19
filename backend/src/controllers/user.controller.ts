@@ -48,7 +48,7 @@ const userRegister = async (req: Request, res: Response) => {
           message: token
         })
       })
-      .catch((error: string) => {
+      .catch((error: string | object) => {
         return res.status(400).json({
           error: error
         })
