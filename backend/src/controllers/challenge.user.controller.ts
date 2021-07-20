@@ -1,6 +1,9 @@
 import { Request, Response } from 'express'
+
 import challengeAdminModel from '../models/challenge.admin.model'
 import challengeUserModel from '../models/challenge.user.model'
+import User from '../models/user.model'
+import { ISchemaUser } from '../models/user.model'
 
 // TODO: add completed challenge to user
 
@@ -10,6 +13,22 @@ const sendChallengeSolve = async (req: Request, res: Response) => {
     return res.status(404).json({
       error: "Challenge not found."
     })
+  } else {
+    const objCompletedChallenges = { idChallenge: req.body.challengeId, completedAt: req.body.time }
+    User.findOneAndUpdate(
+      { _id: req.body.userId },
+      { $push: { completedChallenges: objCompletedChallenges } },
+      { upsert: true },
+      (error: any, doc: any) => {
+        if (error) {
+          return res.status(400).json({
+            error: error
+          })
+        } else {
+          console.log(doc);
+        }
+      }
+    )
   }
   try {
     const challenge = new challengeUserModel({
