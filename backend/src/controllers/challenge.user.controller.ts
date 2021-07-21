@@ -5,8 +5,6 @@ import challengeUserModel from '../models/challenge.user.model'
 import User from '../models/user.model'
 import { ISchemaUser } from '../models/user.model'
 
-// TODO: add completed challenge to user
-
 const sendChallengeSolve = async (req: Request, res: Response) => {
   const challengeExists = await challengeAdminModel.find({ _id: req.body.challengeId }).exec()
   if (!challengeExists) {

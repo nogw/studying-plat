@@ -4,7 +4,7 @@ import cors from 'cors'
 import router from './router'
 import db from './db'
 
-const app = express()
+export const app = express()
 const port = process.env.PORT || 8000
 
 app.use(express.json())

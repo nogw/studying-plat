@@ -44,7 +44,7 @@ const userRegister = async (req: Request, res: Response) => {
           name: user.name,
           id: user._id
         }, process.env.JWT)
-        return res.status(200).json({
+        return res.status(201).json({
           message: token
         })
       })
@@ -93,7 +93,7 @@ const userLogin = async (req: Request, res: Response) => {
         }, process.env.JWT)
         
         return res.status(200).json({
-          token: token
+          message: token
         })
       } else {
         return res.status(400).json({
