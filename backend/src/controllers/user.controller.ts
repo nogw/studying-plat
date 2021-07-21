@@ -17,7 +17,7 @@ const userRegister = async (req: Request, res: Response) => {
   }
 
   try {
-    const existingUser = await User.find({ email: req.body.email }).exec()
+    const existingUser = await User.exists({ email: req.body.email })
     
     if (existingUser) {
       return res.status(400).json({
@@ -35,7 +35,7 @@ const userRegister = async (req: Request, res: Response) => {
       let user = new User({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password
+        password: hashedPass
       })
     
       user.save()
@@ -85,7 +85,6 @@ const userLogin = async (req: Request, res: Response) => {
           error: err
         })
       }
-
       if (result) {
         let token = jwt.sign({
           name: user.name,
@@ -95,7 +94,8 @@ const userLogin = async (req: Request, res: Response) => {
         return res.status(200).json({
           message: token
         })
-      } else {
+      } 
+      else {
         return res.status(400).json({
           password: 'Password does not matched!',
         })

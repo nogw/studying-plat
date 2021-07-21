@@ -44,7 +44,9 @@ describe("User route", () => {
     expect(res.statusCode).toEqual(200)
     expect(res.body).toHaveProperty("message")
   })
+})
 
+describe("Challenge route", () => {
   it("should create a new challenge", async () => {
     const res = await request(app)
     .post("/challenge/admin/create")
