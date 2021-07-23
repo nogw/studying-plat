@@ -18,6 +18,9 @@ router.route("/challenge/admin/create")
 router.route("/challenge/admin/list")
   .get(challengeAdminController.listChallenges)
 
+router.route("/challenge/user/set")
+  .post(challengeUserController.setChallenge)
+
 router.route("/challenge/user/send")
   .post(challengeUserController.sendChallengeSolve)
 

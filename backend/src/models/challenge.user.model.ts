@@ -5,23 +5,31 @@ export interface ISchemaChallengeUser extends Document {
   challengeId: string,
   userId: string,
   solution: string,
-  time: string
+  time: string,
+  approved: boolean | string
 };
 
 const challengeUserSchema = new Schema<ISchemaChallengeUser>(
   {
     challengeId: {
       type: String,
+      required: true,
     },
     userId: {
       type: String,
+      required: true,
     },
     solution: {
       type: String,
+      required: true,
     },
     time: {
       type: String,
+      required: true,
     },
+    approved: {
+      type: Boolean || String
+    }
   }
 )
 
