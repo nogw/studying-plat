@@ -12,18 +12,18 @@ const setChallenge = async (req: Request, res: Response) => {
     })
   }
 
-  // TODO: check if the upload is done by the logged in user
-
   const challengeExists = await challengeAdminModel.find({ _id: req.body.challengeId }).exec()
+  
   if (!challengeExists) {
     return res.status(404).json({
       error: "Challenge not found."
     })
-  } else {
-    const objCompletedChallenges = { idChallenge: req.body.challengeId }
+  } 
+
+  const updateStatusInModel = (status: string | boolean) => {
     User.findOneAndUpdate(
-      { _id: req.body.userId },
-      { $push: { completedChallenges: objCompletedChallenges, approved: "dropped" } },
+      { _id: req.body.userId, "completedChallenges.idChallenge": req.body.challengeId },
+      { $set: { "completedChallenges.$.approved": status } },
       { upsert: true },
       (error: any, doc: any) => {
         if (error) {
@@ -36,10 +36,34 @@ const setChallenge = async (req: Request, res: Response) => {
       }
     )
   }
+
+  // TODO: check if the upload is done by the logged in user, and check if user is admin
+
+  switch (req.body.set) {
+    case "drop":
+      updateStatusInModel("dropped")
+      break;
+
+    case "approve":
+      updateStatusInModel(true)
+      break;
+
+    case "reject":
+      updateStatusInModel(false)
+      break;
+    
+    default:
+      return res.status(400).json({
+        error: "need option to set"
+      })
+      break;
+  }
+  
 }
 
 const sendChallengeSolve = async (req: Request, res: Response) => {
   const challengeExists = await challengeAdminModel.find({ _id: req.body.challengeId }).exec()
+  
   if (!challengeExists) {
     return res.status(404).json({
       error: "Challenge not found."
@@ -61,6 +85,7 @@ const sendChallengeSolve = async (req: Request, res: Response) => {
       }
     )
   }
+
   try {
     const challenge = new challengeUserModel({
       challengeId: req.body.challengeId,
