@@ -1,22 +1,18 @@
 import jwt, { JwtPayload } from 'jsonwebtoken'
 
-type Maybe<T> = T | null | undefined;
-
-// TODO: add type to payload
-
-const encode = (payload) => {
-  jwt.sign(payload, process.env.JWT as string, {
+const encode = (payload: string | JwtPayload) => {
+  jwt.sign(payload, process.env.JWT, {
     expiresIn: "24h"
   })
 }
 
-const decode = (bearer_token: string) => {
+const decode = async (bearer_token: string) => {
   try {
     const [token] = bearer_token.split(" ")
-    const payload = jwt.verify(token, process.env.JWT)
+    const payload = await jwt.verify(token, process.env.JWT as string)
     return payload
-  } catch (error) {
-    return null
+  } catch (err) {
+    return {}
   }
 }
 

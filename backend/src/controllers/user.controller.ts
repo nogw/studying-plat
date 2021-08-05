@@ -2,6 +2,8 @@ import { Request, Response } from 'express'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
+import Jwt from '../lib/jwt.lib'
+
 import validateLogin from '../utils/validator/validateLogin'
 import validateRegister from '../utils/validator/validateRegister'
 import User from '../models/user.model'
@@ -40,10 +42,10 @@ const userRegister = async (req: Request, res: Response) => {
     
       user.save()
       .then((user: ISchemaUser) => {
-        let token = jwt.sign({
+        let token = Jwt.encode({
           name: user.name,
           id: user._id
-        }, process.env.JWT)
+        })
         return res.status(201).json({
           message: token
         })
@@ -86,10 +88,10 @@ const userLogin = async (req: Request, res: Response) => {
         })
       }
       if (result) {
-        let token = jwt.sign({
+        let token = Jwt.encode({
           name: user.name,
           id: user._id
-        }, process.env.JWT)
+        })
         
         return res.status(200).json({
           message: token
