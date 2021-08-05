@@ -6,7 +6,7 @@ import User from '../models/user.model'
 import { ISchemaUser } from '../models/user.model'
 
 const setChallenge = async (req: Request, res: Response) => {
-  if (!req.body.set) {
+  if (!req.headers.authorization) {
     return res.status(400).json({
       error: "Send status challenge"
     })
