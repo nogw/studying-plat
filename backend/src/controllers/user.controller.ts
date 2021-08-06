@@ -5,8 +5,6 @@ import Jwt from '../lib/jwt.lib'
 import Yup from '../validation/yup.schemas'
 import yupValidation from '../validation/yup.validation'
 
-import validateLogin from '../utils/validator/validateLogin'
-import validateRegister from '../utils/validator/validateRegister'
 import User from '../models/user.model'
 import { ISchemaUser } from '../models/user.model'
 
