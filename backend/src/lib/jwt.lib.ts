@@ -1,7 +1,7 @@
 import jwt, { JwtPayload } from 'jsonwebtoken'
 
 const encode = (payload: string | JwtPayload) => {
-  jwt.sign(payload, process.env.JWT, {
+  return jwt.sign(payload, process.env.JWT, {
     expiresIn: "24h"
   })
 }

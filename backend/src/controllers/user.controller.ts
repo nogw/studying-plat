@@ -1,8 +1,9 @@
 import { Request, Response } from 'express'
 import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
 
 import Jwt from '../lib/jwt.lib'
+import Yup from '../validation/yup.schemas'
+import yupValidation from '../validation/yup.validation'
 
 import validateLogin from '../utils/validator/validateLogin'
 import validateRegister from '../utils/validator/validateRegister'
@@ -10,9 +11,9 @@ import User from '../models/user.model'
 import { ISchemaUser } from '../models/user.model'
 
 const userRegister = async (req: Request, res: Response) => {
-  const { errors, isValid } = validateRegister(req.body)
+  const errors = await yupValidation(req.body, Yup.registerSchema)
 
-  if (!isValid) {
+  if (errors) {
     return res.status(400).json({
       error: errors
     })
@@ -64,9 +65,9 @@ const userRegister = async (req: Request, res: Response) => {
 }
 
 const userLogin = async (req: Request, res: Response) => {
-  const { errors, isValid } = validateLogin(req.body)
+  const errors = await yupValidation(req.body, Yup.loginSchema)
 
-  if (!isValid) {
+  if (errors) {
     return res.status(400).json({
       error: errors
     })
