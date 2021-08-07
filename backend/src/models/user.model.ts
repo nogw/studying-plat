@@ -10,6 +10,7 @@ export interface ISchemaUser extends Document {
   name: string,
   email: string,
   password: string,
+  permission: string,
   completedChallenges: Array<IArrayChallenges>
 };
 
@@ -37,6 +38,10 @@ const userSchema = new Schema<ISchemaUser>(
     password: {
       type: String,
       required: true,
+    },
+    permission: {
+      type: String,
+      default: "user"
     },
     completedChallenges: [completedChallengesSchema]
   }

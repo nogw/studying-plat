@@ -1,8 +1,12 @@
 import { Request, Response } from 'express'
 import ChallengeAdmin, { ISchemaChallengeAdmin } from '../models/challenge.admin.model'
 
+const isAdmin = (req: Request) => {
+  return req.body.token_payload.permission === "admin"
+}
+
 const createChallenge = (req: Request, res: Response) => {
-  if (req.body.token_payload.level !== "admin") {
+  if (!isAdmin(req)) {
     return res.status(403).json({
       error: "You need to be an administrator to create challenges"
     })
@@ -33,6 +37,12 @@ const createChallenge = (req: Request, res: Response) => {
 }
 
 const listChallenges = async (req: Request, res: Response) => {
+  if (!isAdmin(req)) {
+    return res.status(403).json({
+      error: "You need to be an administrator to create challenges"
+    })
+  }
+
   try {
     const listExistingChallenges = await ChallengeAdmin.find({}).sort({ createdAt: 'desc'}).exec()
     if (!listExistingChallenges) {

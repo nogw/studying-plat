@@ -36,14 +36,15 @@ const userRegister = async (req: Request, res: Response) => {
       let user = new User({
         name: req.body.name,
         email: req.body.email,
-        password: hashedPass
+        password: hashedPass,
       })
     
       user.save()
       .then((user: ISchemaUser) => {
         let token = Jwt.encode({
+          id: user._id,
           name: user.name,
-          id: user._id
+          permission: user.permission
         })
         return res.status(201).json({
           message: token
@@ -88,8 +89,9 @@ const userLogin = async (req: Request, res: Response) => {
       }
       if (result) {
         let token = Jwt.encode({
+          id: user._id,
           name: user.name,
-          id: user._id
+          permission: user.permission
         })
         
         return res.status(200).json({
