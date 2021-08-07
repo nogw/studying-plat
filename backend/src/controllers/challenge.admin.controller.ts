@@ -2,6 +2,12 @@ import { Request, Response } from 'express'
 import ChallengeAdmin, { ISchemaChallengeAdmin } from '../models/challenge.admin.model'
 
 const createChallenge = (req: Request, res: Response) => {
+  if (req.body.token_payload.level !== "admin") {
+    return res.status(403).json({
+      error: "You need to be an administrator to create challenges"
+    })
+  }
+  
   try {
     const challenge = new ChallengeAdmin({
       challenge: req.body.challenge,
