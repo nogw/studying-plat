@@ -24,7 +24,7 @@ export const ToastNot = styled.div`
   .texts {
     h1 {
       
-      margin-top: -2px;
+      margin-top: -3px;
       font-size: 16px;
     }
   }
@@ -70,10 +70,15 @@ export const Container = styled.div`
   gap: 18px;
   
   .toasts {
-    position: fixed;
-    z-index: 999;
-    left: 50%;
-    bottom: 15px;
+    .Toastify__progress-bar--success {
+      background: #6cba6b;
+    }
+
+    .Toastify__toast-icon {
+      svg {
+        filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(95deg) brightness(120%) contrast(50%);
+      }
+    }
   }
   /* margin-bottom: 100px; */
   

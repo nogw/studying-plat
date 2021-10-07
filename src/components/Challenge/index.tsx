@@ -11,9 +11,12 @@ import {
 } from './styles';
 
 import ReactMarkdown from 'react-markdown'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CodeEditor from '../CodeEditor';
 import { FaCheckCircle, FaTimes } from 'react-icons/fa'
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const markdown = `
   # Python API
@@ -60,7 +63,14 @@ const ModalCancelChallenge = () => {
   )
 }
 
-const ModalSendCode = ({ code, setCode }) => {
+const ModalSendCode = ({ notify, showCode }) => {
+  const [code, setCode] = useState("")
+
+  const handleSendCode = () => {
+    notify()
+    showCode(false)
+  }
+
   return (
     <ModalToSendCodeSolution>
       <Editor>
@@ -71,7 +81,7 @@ const ModalSendCode = ({ code, setCode }) => {
         </LineCounter>
         <CodeEditor/>
       </Editor>
-      <button>ENVIAR</button>
+      <button onClick={handleSendCode}>ENVIAR</button>
     </ModalToSendCodeSolution>
   )
 }
@@ -79,7 +89,11 @@ const ModalSendCode = ({ code, setCode }) => {
 function Challenge() {
   const [show, setShow] = useState(false)
   const [showCode, setShowCode] = useState(false)
-  const [code, setCode] = useState("")
+  const notify = () => toast.success("Desafio enviado com sucesso!", {
+    position: toast.POSITION.BOTTOM_CENTER,
+    draggable: true,
+    theme: "dark" 
+  })
 
   return (
     <>
@@ -90,7 +104,7 @@ function Challenge() {
       }
       {
         showCode && (
-          <ModalSendCode code={code} setCode={setCode}/>
+          <ModalSendCode showCode={setShowCode} notify={notify}/>
         )
       }
       <Container>
@@ -98,13 +112,15 @@ function Challenge() {
           setShow(false) 
           setShowCode(false)
         }}/>
-        <ReactMarkdown components={{CodeBlock}} children={markdown}/>
+        <ReactMarkdown components={CodeBlock} children={markdown}/>
         <div className="buttons">
           <button className="send" onClick={() => setShowCode(!showCode)}>ENVIAR SOLUÇÃO</button>
           <button className="cancel" onClick={() => setShow(!show)}>CANCELAR DESAFIO</button>
         </div>
         <div className="toasts">
-          <Toast text="Sucesso" subtext="Desafio enviado!"/>
+          <ToastContainer 
+            draggable
+          />
         </div>
       </Container>
     </>
