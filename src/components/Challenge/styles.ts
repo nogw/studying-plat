@@ -1,35 +1,5 @@
 import styled from 'styled-components';
 
-export const ToastNot = styled.div`
-  transform: translate(-50%, -50%);
-
-  padding: 12px;
-  display: flex;
-  justify-content: space-around;
-
-  background: #6cba6b;
-  border-radius: 6px;
-  height: auto;
-
-  .checkicon {
-    
-    margin-right: 12px;
-  }
-
-  .closeicon {
-    margin-left: 36px;
-    cursor: pointer;
-  }
-
-  .texts {
-    h1 {
-      
-      margin-top: -3px;
-      font-size: 16px;
-    }
-  }
-`;
-
 export const LineCounter = styled.div`
   position: absolute;
   left: 10px;
@@ -137,9 +107,25 @@ export const ModalCancelChallengeContainer = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+
+  .close {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+
+    .icon-close {
+      cursor: pointer;
+    }
+
+    h1 {
+      font-size: 16px;
+      text-align: center;
+    }
+  }
   
   background-color: #202225;
-  border-radius: 16px;
+  border-radius: 8px;
   font-family: Roboto;
   color: #fff;
   gap: 22px;
@@ -148,26 +134,24 @@ export const ModalCancelChallengeContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 26px;
-  width: 310px;
+  padding: 18px 32px 26px 32px;
 
-  h1 {
-    font-size: 16px;
-    text-align: center;
-  }
+  max-width: 300px;
+  width: 100%;
 
   button {
     padding: 8px 8px 9px 8px;
-    background-color: transparent;
+    background-color: #e63946;
     cursor: pointer;
     border-radius: 4px;
     outline: none;
-    width: 80%;
+    width: 100%;
     
     font-family: Roboto;
-    color: #e63946;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #fff;
     border : 2px solid #e63946;
-    font-weight: 900;
     transition: 200ms ease all;
   }
 
@@ -183,8 +167,24 @@ export const ModalToSendCodeSolution = styled.div`
   top: 50%;
   transform: translate(-50%, -50%);
   
+  .close {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+
+    .icon-close {
+      cursor: pointer;
+    }
+
+    h1 {
+      font-size: 16px;
+      text-align: center;
+    }
+  }
+
   background-color: #202225;
-  border-radius: 16px;
+  border-radius: 8px;
   font-family: Roboto;
   color: #fff;
   gap: 22px;
@@ -198,13 +198,8 @@ export const ModalToSendCodeSolution = styled.div`
   max-width: 500px;
   width: 100%;
 
-  h1 {
-    font-size: 16px;
-    text-align: center;
-  }
-
   button {
-    padding: 8px 8px 10px 8px;
+    padding: 6px 6px 8px 6px;
     background-color: #6cba6b;
     cursor: pointer;
     border-radius: 4px;
@@ -212,9 +207,10 @@ export const ModalToSendCodeSolution = styled.div`
     width: 100%;
     
     font-family: Roboto;
+    font-weight: 500;
+    font-size: 1rem;
     color: #fff;
     border : 2px solid #6cba6b;
-    font-weight: 900;
     transition: 200ms ease all;
   }
 

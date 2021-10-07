@@ -4,7 +4,10 @@ require("prismjs/components/prism-python")
 import Prism from "prismjs";
 
 function CodeEditor() {
-  const data = "# Cole seu codigo aqui!";
+  const data = `# Cole seu codigo aqui!
+
+
+`;
   const [content, setContent] = useState(data);
 
   useEffect(() => {

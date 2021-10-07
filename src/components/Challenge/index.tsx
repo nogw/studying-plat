@@ -7,7 +7,6 @@ import {
   BackgroundToNavMobile,
   Editor,
   LineCounter, 
-  ToastNot
 } from './styles';
 
 import ReactMarkdown from 'react-markdown'
@@ -37,28 +36,15 @@ const markdown = `
   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero eius velit aut vel ut consequatur, magnam officiis. Adipisci magni, distinctio, consequatur totam voluptas praesentium a ad repellat, molestiae quasi eius.
 `
 
-const Toast = ({ text, subtext }) => {
-  return (
-    <ToastNot>
-      <div className="checkicon">
-        <FaCheckCircle/>
-      </div>
-      <div className="texts">
-        <h1>{text}</h1>
-        <p>{subtext}</p>
-      </div>
-      <div className="closeicon">
-        <FaTimes/>
-      </div>
-    </ToastNot>
-  )
-}
-
-const ModalCancelChallenge = () => {
+const ModalCancelChallenge = ({ showCode }) => {
   return (
     <ModalCancelChallengeContainer>
-      <h1>voce tem certeza que deseja cancelar o desafio?</h1>
-      <button>CANCELAR</button>
+      <div className="close">
+        <h1>Cancelar desafio</h1>
+        <FaTimes onClick={() => showCode(false)} className="icon-close"/>
+      </div>
+      <p>voce tem certeza que deseja cancelar o desafio?</p>
+      <button>Cancelar desafio</button>
     </ModalCancelChallengeContainer>
   )
 }
@@ -73,6 +59,10 @@ const ModalSendCode = ({ notify, showCode }) => {
 
   return (
     <ModalToSendCodeSolution>
+      <div className="close">
+        <h1>Enviar solução do desafio</h1>
+        <FaTimes onClick={() => showCode(false)} className="icon-close"/>
+      </div>
       <Editor>
         <LineCounter>
           {new Array(200).fill(" ").map((_, i) => (
@@ -81,7 +71,7 @@ const ModalSendCode = ({ notify, showCode }) => {
         </LineCounter>
         <CodeEditor/>
       </Editor>
-      <button onClick={handleSendCode}>ENVIAR</button>
+      <button onClick={handleSendCode}>Enviar codigo</button>
     </ModalToSendCodeSolution>
   )
 }
@@ -91,6 +81,7 @@ function Challenge() {
   const [showCode, setShowCode] = useState(false)
   const notify = () => toast.success("Desafio enviado com sucesso!", {
     position: toast.POSITION.BOTTOM_CENTER,
+    autoClose: 3000,
     draggable: true,
     theme: "dark" 
   })
@@ -99,7 +90,7 @@ function Challenge() {
     <>
       {
         show && (
-          <ModalCancelChallenge/>
+          <ModalCancelChallenge showCode={setShow}/>
         ) 
       }
       {
