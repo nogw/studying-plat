@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import { motion } from 'framer-motion';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -26,9 +27,11 @@ export const Container = styled.div`
         font-size: 26px;
       }
 
-      &:active {
-        filter: brightness(0.8);
-        transform: rotate(180deg);
+      .icon-close {
+        font-size: 26px;
+        cursor: pointer;
+        z-index: 995;
+        color: #fff;
       }
     }
 
@@ -137,58 +140,86 @@ export const Icon = styled.div`
   }
 `;
 
-interface PropsMobileNav {
-  showNav: boolean
-}
-
-export const MobileNav = styled.div<PropsMobileNav>`
-  transition: all 300ms ease;
-  transform: ${props => props.showNav ? "translateX(0px)" : "translateX(calc(100% + 20px))"};
-  
+export const ContainerNav = styled.div`
   display: flex;
-  flex-direction: column;
-
-  background-color: #202225;
-  border-radius: 6px;
-
-  margin: 20px 20px 20px 20px;
-  padding: 20px;
-  z-index: 999;
-  gap: 12px;
-  
   position: fixed;
+  padding: 12px 28px;
+  top: 0px;
+  bottom: 0px;
   right: 0px;
   left: 0px;
-  top: 0px;
+  z-index: 994;
+`;
 
-  .icon {
-    cursor: pointer;
-    color: #fff;
-    font-size: 26px;
-    margin-bottom: 8px;
-    margin-left: auto;
-    transform: rotate(180deg);
+const baseListStyle = css`
+  list-style: none;
+  width: fit-content;
+  font-weight: bold;
+  
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  cursor: pointer;
 
-    &:active {
-      filter: brightness(0.8);
-      transform: rotate(0deg);
-    }
+  font-family: "Roboto Mono";
+  font-weight: bold;
+  font-size: 35px;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  transition: all 400ms ease;
+  
+  &:hover {
+    color: #768BD4;
   }
 
-  @media screen and (min-width: 700px) {
-    display: none;
+  @media screen and (max-width: 605px) {
+    margin-left: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    font-size: 32px;
+  }
+
+  @media screen and (max-width: 450px) {
+    font-size: 24px;
   }
 `;
 
-export const BackgroundToNavMobile = styled.div<PropsMobileNav>`
-  transition: all 300ms ease;
-  pointer-events: ${props => props.showNav ? "all" : "none"};;
-  opacity: ${props => props.showNav ? 1 : 0};
-  background-color: rgba(0,0,0,0.5);
+export const ListItem = styled.h1`
+  ${baseListStyle}
+`;
+
+export const LinkRedirect = styled.div`
+  ${baseListStyle}
+`;
+
+type ContainerProps = {
+  show: boolean
+}
+
+export const List = styled(motion.div)<ContainerProps>`
+  display: ${props => props.show ? "flex" : "none"};
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  z-index: 999;
+  gap: 42px;
+  margin-left: 24px;
+  
+  @media screen and (max-width: 605px) {
+    margin-left: 0px;
+  }
+`;
+
+export const Bgc = styled(motion.div)`
+  background-color: rgba(0,0,0,0.9);
   position: fixed;
-  top: 0;
-  right: 0;
+  z-index: 295;
   left: 0;
+  right: 0;
+  top: 0;
   bottom: 0;
-  z-index: 998;
-`
+`;

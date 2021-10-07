@@ -3,13 +3,17 @@ import CodeBlock from '../CodeBlock';
 import { 
   Container,
   ModalCancelChallengeContainer,
-  ModalToSendCodeSolution 
+  ModalToSendCodeSolution,
+  BackgroundToNavMobile,
+  Editor,
+  LineCounter, 
+  ToastNot
 } from './styles';
 
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
 import ReactMarkdown from 'react-markdown'
-import { BackgroundToNavMobile } from '../Navbar/styles';
 import { useState } from 'react';
+import CodeEditor from '../CodeEditor';
+import { FaCheckCircle, FaTimes } from 'react-icons/fa'
 
 const markdown = `
   # Python API
@@ -30,6 +34,23 @@ const markdown = `
   Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero eius velit aut vel ut consequatur, magnam officiis. Adipisci magni, distinctio, consequatur totam voluptas praesentium a ad repellat, molestiae quasi eius.
 `
 
+const Toast = ({ text, subtext }) => {
+  return (
+    <ToastNot>
+      <div className="checkicon">
+        <FaCheckCircle/>
+      </div>
+      <div className="texts">
+        <h1>{text}</h1>
+        <p>{subtext}</p>
+      </div>
+      <div className="closeicon">
+        <FaTimes/>
+      </div>
+    </ToastNot>
+  )
+}
+
 const ModalCancelChallenge = () => {
   return (
     <ModalCancelChallengeContainer>
@@ -42,13 +63,14 @@ const ModalCancelChallenge = () => {
 const ModalSendCode = ({ code, setCode }) => {
   return (
     <ModalToSendCodeSolution>
-      <h1>Cole seu codigo aqui!</h1>
-        <textarea 
-          className="code" 
-          spellCheck="false"
-          value={code}
-          onChange={(e: any) => setCode(e.target.value)}
-        />
+      <Editor>
+        <LineCounter>
+          {new Array(200).fill(" ").map((_, i) => (
+            <span key={i}>{i + 1}</span>
+          ))}
+        </LineCounter>
+        <CodeEditor/>
+      </Editor>
       <button>ENVIAR</button>
     </ModalToSendCodeSolution>
   )
@@ -76,10 +98,13 @@ function Challenge() {
           setShow(false) 
           setShowCode(false)
         }}/>
-        <ReactMarkdown components={CodeBlock} children={markdown}/>
+        <ReactMarkdown components={{CodeBlock}} children={markdown}/>
         <div className="buttons">
           <button className="send" onClick={() => setShowCode(!showCode)}>ENVIAR SOLUÇÃO</button>
           <button className="cancel" onClick={() => setShow(!show)}>CANCELAR DESAFIO</button>
+        </div>
+        <div className="toasts">
+          <Toast text="Sucesso" subtext="Desafio enviado!"/>
         </div>
       </Container>
     </>

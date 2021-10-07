@@ -1,5 +1,62 @@
 import styled from 'styled-components';
 
+export const ToastNot = styled.div`
+  transform: translate(-50%, -50%);
+
+  padding: 12px;
+  display: flex;
+  justify-content: space-around;
+
+  background: #6cba6b;
+  border-radius: 6px;
+  height: auto;
+
+  .checkicon {
+    
+    margin-right: 12px;
+  }
+
+  .closeicon {
+    margin-left: 36px;
+    cursor: pointer;
+  }
+
+  .texts {
+    h1 {
+      
+      margin-top: -2px;
+      font-size: 16px;
+    }
+  }
+`;
+
+export const LineCounter = styled.div`
+  position: absolute;
+  left: 10px;
+  top: 16px;
+  bottom: 16px;
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  overflow: hidden;
+
+  span {
+    line-height: 24.8px;
+    display: block;
+    text-align: right;
+  }
+`;
+
+export const Editor = styled.div`
+  background: #1a1d1f;
+  padding: 16px 0;
+  box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  margin: auto;
+  overflow-y: hidden;
+  position: relative;
+`;
+
 export const Container = styled.div`
   background-color: #202225;
   border-radius: 8px;
@@ -12,6 +69,12 @@ export const Container = styled.div`
   position: relative;
   gap: 18px;
   
+  .toasts {
+    position: fixed;
+    z-index: 999;
+    left: 50%;
+    bottom: 15px;
+  }
   /* margin-bottom: 100px; */
   
   h1 {
@@ -43,8 +106,8 @@ export const Container = styled.div`
     }
 
     .send:hover {
-      color: #90be6d;
-      border : 2px solid #90be6d;
+      color: #6cba6b;
+      border : 2px solid #6cba6b;
     }
 
     .cancel:hover {
@@ -126,7 +189,9 @@ export const ModalToSendCodeSolution = styled.div`
   justify-content: center;
   flex-direction: column;
   padding: 26px 32px;
-  width: 410px;
+
+  max-width: 500px;
+  width: 100%;
 
   h1 {
     font-size: 16px;
@@ -134,16 +199,16 @@ export const ModalToSendCodeSolution = styled.div`
   }
 
   button {
-    padding: 8px 8px 9px 8px;
-    background-color: transparent;
+    padding: 8px 8px 10px 8px;
+    background-color: #6cba6b;
     cursor: pointer;
     border-radius: 4px;
     outline: none;
     width: 100%;
     
     font-family: Roboto;
-    color: #90be6d;
-    border : 2px solid #90be6d;
+    color: #fff;
+    border : 2px solid #6cba6b;
     font-weight: 900;
     transition: 200ms ease all;
   }
@@ -161,7 +226,24 @@ export const ModalToSendCodeSolution = styled.div`
     font-size: 16px;
   }
 
-  @media screen and (max-width: 450px) {
-    width: 90%;
+  @media screen and (max-width: 550px) {
+    width: calc(90%);
   }
 `;
+
+interface PropsMobileNav {
+  showNav: boolean
+}
+
+export const BackgroundToNavMobile = styled.div<PropsMobileNav>`
+  transition: all 300ms ease;
+  pointer-events: ${props => props.showNav ? "all" : "none"};;
+  opacity: ${props => props.showNav ? 1 : 0};
+  background-color: rgba(0,0,0,0.5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 998;
+`

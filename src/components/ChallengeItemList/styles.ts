@@ -46,8 +46,8 @@ export const ContainerC = styled.div<ContainerProps>`
     transition: all ease 200ms;
 
     &:hover {
-      border: 2px solid ${props => props.start ? "#e63946" : "#90be6d"};
-      color: ${props => props.start ? "#e63946" : "#90be6d"};
+      border: 2px solid ${props => props.start ? "#e63946" : "#6cba6b"};
+      color: ${props => props.start ? "#e63946" : "#6cba6b"};
     }
   }
 `;

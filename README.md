@@ -2,9 +2,9 @@
 
 ## todos:frontend
 
-- [ ] login screen
-- [ ] registration screen
-- [ ] challenge screen
+- [x] login screen
+- [x] registration screen
+- [x] challenge screen
 - [ ] profile screen
 - [ ] admin screen
 
@@ -14,4 +14,6 @@
 - [ ]  user login
 - [ ]  creating challenges
 - [ ]  sending the solution to the challenges
-- [ ] approve or deny challenges
+- [ ]  approve or deny challenges
+- [ ]  verify jwt token
+- [ ]  refresh jwt token

@@ -1,8 +1,12 @@
-import { createGlobalStyle, ThemeProvider } from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
+
+import "./syntax-theme.css";
 
 import NProgress from 'nprogress'; 
 import 'nprogress/nprogress.css'; 
 NProgress.configure({ showSpinner: false });
+import Router from "next/router";
+import { useEffect } from 'react';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -23,6 +27,22 @@ const GlobalStyle = createGlobalStyle`
     font-family: Roboto, Helvetica, sans-serif;
   }
 
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    background: #101010;
+  }
+  ::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #474747;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #383838;
+  }
+
   #nprogress {
     .bar {
       background: #768BD4 !important;
@@ -35,6 +55,23 @@ const GlobalStyle = createGlobalStyle`
 `
 
 export default function App({ Component, pageProps }) {
+  useEffect(() => {
+    const delay = 500;
+    let timer;
+    const load = () => {
+      timer = setTimeout(function () {
+        NProgress.start();
+      }, delay);
+    };
+    const stop = () => {
+      clearTimeout(timer);
+      NProgress.done();
+    };
+    Router.events.on("routeChangeStart", () => load());
+    Router.events.on("routeChangeComplete", () => stop());
+    Router.events.on("routeChangeError", () => stop());
+  }, []);
+
   return (
     <>
       <GlobalStyle />
