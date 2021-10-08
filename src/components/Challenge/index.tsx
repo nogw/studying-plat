@@ -17,25 +17,6 @@ import { FaCheckCircle, FaTimes } from 'react-icons/fa'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const markdown = `
-  # Python API
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero eius velit aut vel ut consequatur, magnam officiis. Adipisci magni, distinctio, consequatur totam voluptas praesentium a ad repellat, molestiae quasi eius.
-  ~~~python
-  num = int(input("Enter a number: "))
-  if (num % 2) == 0:
-     print("{0} is Even".format(num))
-  else:
-     print("{0} is Odd".format(num))  
-  ~~~
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero eius velit aut vel ut consequatur, magnam officiis. Adipisci magni, distinctio, consequatur totam voluptas praesentium a ad repellat, molestiae quasi eius.
-  ~~~term
-  value: 2
-  value: 1
-  3  
-  ~~~
-  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero eius velit aut vel ut consequatur, magnam officiis. Adipisci magni, distinctio, consequatur totam voluptas praesentium a ad repellat, molestiae quasi eius.
-`
-
 const ModalCancelChallenge = ({ showCode }) => {
   return (
     <ModalCancelChallengeContainer>
@@ -76,7 +57,7 @@ const ModalSendCode = ({ notify, showCode }) => {
   )
 }
 
-function Challenge() {
+function Challenge({ id, markdown }) {
   const [show, setShow] = useState(false)
   const [showCode, setShowCode] = useState(false)
   const notify = () => toast.success("Desafio enviado com sucesso!", {

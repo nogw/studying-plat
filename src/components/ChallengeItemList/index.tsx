@@ -1,10 +1,10 @@
 import { ContainerC } from './styles';
 import Link from 'next/link'
 
-function ChallengeItemList({ id, name, desc, start }) {
+function ChallengeItemList({ id, name, desc }) {
   return (
     <Link href={`/desafio/${id}`}>
-    <ContainerC start={start}>
+    <ContainerC>
       <div className="circle"/>
       <div className="texts">
         <h2>{name}</h2>
@@ -12,7 +12,7 @@ function ChallengeItemList({ id, name, desc, start }) {
       </div>
       <Link href={`/`}>
         <div className="leave">
-          {start ? "LEAVE" : "START"}
+          START
         </div>
       </Link>
     </ContainerC>

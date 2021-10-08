@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 
-interface ContainerProps {
-  start: boolean
-}
-
-export const ContainerC = styled.div<ContainerProps>`
+export const ContainerC = styled.div`
   display: flex;
   align-items: center;
   padding: 12px;
@@ -46,8 +42,8 @@ export const ContainerC = styled.div<ContainerProps>`
     transition: all ease 200ms;
 
     &:hover {
-      border: 2px solid ${props => props.start ? "#e63946" : "#6cba6b"};
-      color: ${props => props.start ? "#e63946" : "#6cba6b"};
+      border: 2px solid #6cba6b;
+      color: #6cba6b;
     }
   }
 `;

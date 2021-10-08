@@ -1,14 +1,23 @@
 import Layout from '../../src/components/Layout'
 import Challenge from '../../src/components/Challenge'
+import { api } from '../../src/utils/api';
+import { GetServerSideProps } from 'next';
 
-function SlugTsx() {
+export default function SlugTsx({ challenges }) {
   return (
     <>
       <Layout>
-        <Challenge/>
+        <Challenge id={challenges[0]._id} markdown={ challenges[0].challenge }/>
       </Layout>
     </>
   );
 }
 
-export default SlugTsx;
+export const getServerSideProps: GetServerSideProps = async () => {
+  const response: any = await api.get("/challenge/admin/list")
+  const challenges = response.data.message
+
+  return {
+    props: { challenges }
+  }
+}
