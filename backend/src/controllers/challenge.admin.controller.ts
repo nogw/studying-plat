@@ -14,7 +14,10 @@ const createChallenge = (req: Request, res: Response) => {
   
   try {
     const challenge = new ChallengeAdmin({
+      title: req.body.title,
+      description: req.body.description,
       challenge: req.body.challenge,
+      difficulty: req.body.difficulty,
       points: req.body.points,
       limit: req.body.limit
     })
@@ -37,11 +40,11 @@ const createChallenge = (req: Request, res: Response) => {
 }
 
 const listChallenges = async (req: Request, res: Response) => {
-  if (!isAdmin(req)) {
-    return res.status(403).json({
-      error: "You need to be an administrator to create challenges"
-    })
-  }
+  // if (!isAdmin(req)) {
+  //   return res.status(403).json({
+  //     error: "You need to be an administrator to list challenges"
+  //   })
+  // }
 
   try {
     const listExistingChallenges = await ChallengeAdmin.find({}).sort({ createdAt: 'desc'}).exec()
@@ -60,7 +63,26 @@ const listChallenges = async (req: Request, res: Response) => {
   }
 }
 
+const getChallenge = async (req: Request, res: Response) => {
+  try {
+    const ExistChallenge = await ChallengeAdmin.findOne(req.body.challengeId).exec()
+    if (!ExistChallenge) {
+      return res.status(404).json({
+        error: "No challenge created."
+      })
+    }
+    return res.status(200).json({
+      message: ExistChallenge
+    })
+  } catch (error) {
+    return res.status(400).json({
+      error: error
+    })
+  }
+}
+
 export default {
   createChallenge,
-  listChallenges
+  listChallenges,
+  getChallenge
 }
