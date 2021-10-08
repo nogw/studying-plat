@@ -7,14 +7,15 @@ export default function SlugTsx({ challenges }) {
   return (
     <>
       <Layout>
-        <Challenge id={challenges[0]._id} markdown={ challenges[0].challenge }/>
+        <Challenge id={challenges._id} markdown={ challenges.challenge }/>
       </Layout>
     </>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const response: any = await api.get("/challenge/admin/list")
+export const getServerSideProps: GetServerSideProps = async ( ctx ) => {
+  const { slug } = ctx.query
+  const response: any = await api.get(`/challenge/admin/get/${slug}`)
   const challenges = response.data.message
 
   return {
