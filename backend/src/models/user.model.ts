@@ -2,6 +2,7 @@ import mongoose, { Document, Schema } from 'mongoose'
 
 export interface IArrayChallenges extends Document {
   idChallenge: string,
+  startedAt: string,
   completedAt: string
 }
 
@@ -12,15 +13,20 @@ export interface ISchemaUser extends Document {
   password: string,
   permission: string,
   completedChallenges: Array<IArrayChallenges>
+  inProgressChallenges: Array<IArrayChallenges>
 };
 
-const completedChallengesSchema = new Schema<IArrayChallenges>(
+const ChallengesSchema = new Schema<IArrayChallenges>(
   {
     idChallenge: {
       type: String
     },
-    completedAt: {
+    startedAt: {
       type: String
+    },
+    completedAt: {
+      type: String,
+      required: false
     }
   }
 )
@@ -43,7 +49,8 @@ const userSchema = new Schema<ISchemaUser>(
       type: String,
       default: "user"
     },
-    completedChallenges: [completedChallengesSchema]
+    completedChallenges: [ChallengesSchema],
+    inProgressChallenges: [ChallengesSchema]
   }
 )
 

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import ChallengeAdmin, { ISchemaChallengeAdmin } from '../models/challenge.admin.model'
+import userModel from '../models/user.model'
 
 const isAdmin = (req: Request) => {
   return req.body.token_payload.permission === "admin"
@@ -64,8 +65,10 @@ const listChallenges = async (req: Request, res: Response) => {
 }
 
 const getChallenge = async (req: Request, res: Response) => {
+  const slug = req.params.slug
+
   try {
-    const ExistChallenge = await ChallengeAdmin.findOne(req.body.challengeId).exec()
+    const ExistChallenge = await ChallengeAdmin.findById(slug).exec()
     if (!ExistChallenge) {
       return res.status(404).json({
         error: "No challenge created."
@@ -81,8 +84,61 @@ const getChallenge = async (req: Request, res: Response) => {
   }
 }
 
+const setChallenge = async (req: Request, res: Response) => {
+  if (!req.body.set) {
+    return res.status(400).json({
+      error: "Send status challenge"
+    })
+  }
+
+  const challengeExists = await ChallengeAdmin.find({ _id: req.body.challengeId }).exec()
+  
+  if (!challengeExists) {
+    return res.status(404).json({
+      error: "Challenge not found."
+    })
+  } 
+
+  const updateStatusInModel = (status: string | boolean) => {
+    userModel.findOneAndUpdate(
+      { _id: req.body.userId, "completedChallenges.idChallenge": req.body.challengeId },
+      { $set: { "completedChallenges.$.approved": status } },
+      { upsert: true },
+      (error: any, doc: any) => {
+        if (error) {
+          return res.status(400).json({
+            error: error
+          })
+        } else {
+          console.log(doc);
+        }
+      }
+    )
+  }
+
+  // TODO: check if the upload is done by the logged in user, and check if user is admin
+
+  switch (req.body.set) {
+    case "drop":
+      updateStatusInModel("dropped")
+      break;
+    case "approve":
+      updateStatusInModel(true)
+      break;
+    case "reject":
+      updateStatusInModel(false)
+      break;
+    default:
+      return res.status(400).json({
+        error: "need option to set"
+      })
+      break;
+  }
+}
+
 export default {
   createChallenge,
   listChallenges,
-  getChallenge
+  getChallenge,
+  setChallenge
 }

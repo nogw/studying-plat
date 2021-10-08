@@ -17,15 +17,20 @@ router.route("/challenge/admin/create")
 
 router.route("/challenge/admin/list")
   .get(challengeAdminController.listChallenges)
+  
+router.route("/challenge/admin/set")
+  .post(challengeAdminController.setChallenge)
 
-router.route("challenge/admin/get")
-  .post(challengeAdminController.getChallenge)
-
-router.route("/challenge/user/set")
-  .post(challengeUserController.setChallenge)
+router.route("/challenge/admin/get/:slug")
+  .get(challengeAdminController.getChallenge)
 
 router.route("/challenge/user/send")
   .post(challengeUserController.sendChallengeSolve)
 
+router.route("/challenge/user/start")
+  .post(challengeUserController.startChallenge)
+
+router.route("/challenge/user/completed")
+  .get(challengeUserController.completedChallenges)
 
 export default router

@@ -1,65 +1,10 @@
+import dayjs from 'dayjs'
 import { Request, Response } from 'express'
 
 import challengeAdminModel from '../models/challenge.admin.model'
 import challengeUserModel from '../models/challenge.user.model'
 import User from '../models/user.model'
-import { ISchemaUser } from '../models/user.model'
-
-const setChallenge = async (req: Request, res: Response) => {
-  if (!req.body.set) {
-    return res.status(400).json({
-      error: "Send status challenge"
-    })
-  }
-
-  const challengeExists = await challengeAdminModel.find({ _id: req.body.challengeId }).exec()
-  
-  if (!challengeExists) {
-    return res.status(404).json({
-      error: "Challenge not found."
-    })
-  } 
-
-  const updateStatusInModel = (status: string | boolean) => {
-    User.findOneAndUpdate(
-      { _id: req.body.userId, "completedChallenges.idChallenge": req.body.challengeId },
-      { $set: { "completedChallenges.$.approved": status } },
-      { upsert: true },
-      (error: any, doc: any) => {
-        if (error) {
-          return res.status(400).json({
-            error: error
-          })
-        } else {
-          console.log(doc);
-        }
-      }
-    )
-  }
-
-  // TODO: check if the upload is done by the logged in user, and check if user is admin
-
-  switch (req.body.set) {
-    case "drop":
-      updateStatusInModel("dropped")
-      break;
-
-    case "approve":
-      updateStatusInModel(true)
-      break;
-
-    case "reject":
-      updateStatusInModel(false)
-      break;
-    
-    default:
-      return res.status(400).json({
-        error: "need option to set"
-      })
-      break;
-  }
-  
-}
+import userModel, { ISchemaUser } from '../models/user.model'
 
 const sendChallengeSolve = async (req: Request, res: Response) => {
   const challengeExists = await challengeAdminModel.find({ _id: req.body.challengeId }).exec()
@@ -75,7 +20,8 @@ const sendChallengeSolve = async (req: Request, res: Response) => {
       challengeId: req.body.challengeId,
       userId: req.body.userId,
       solution: req.body.solution,
-      time: req.body.time
+      time: req.body.time,
+      approved: "await" 
     })
     
     challenge.save()
@@ -85,24 +31,24 @@ const sendChallengeSolve = async (req: Request, res: Response) => {
       })
     })
 
-    User.findOneAndUpdate(
-      { _id: req.body.userId },
-      { $push: { 
-          completedChallenges: { idChallenge: req.body.challengeId, completedAt: req.body.time }, 
-          approved: "await" 
-        }
-      },
-      { upsert: true },
-      (error: any, doc: any) => {
-        if (error) {
-          return res.status(400).json({
-            error: error
-          })
-        } else {
-          console.log(doc);
-        }
-      }
-    )
+    // User.findOneAndUpdate(
+    //   { _id: req.body.userId },
+    //   { $push: { 
+    //       completedChallenges: { idChallenge: req.body.challengeId, completedAt: req.body.time }, 
+    //       approved: "await" 
+    //     }
+    //   },
+    //   { upsert: true },
+    //   (error: any, doc: any) => {
+    //     if (error) {
+    //       return res.status(400).json({
+    //         error: error
+    //       })
+    //     } else {
+    //       console.log(doc);
+    //     }
+    //   }
+    // )
   } catch (error) {
     return res.status(400).json({
       error: error
@@ -110,7 +56,46 @@ const sendChallengeSolve = async (req: Request, res: Response) => {
   }
 }
 
+const startChallenge = async (req: Request, res: Response) => {
+  const challengeExists = await challengeAdminModel.find({ _id: req.body.challengeId }).exec()
+
+  if (!challengeExists) {
+    return res.status(404).json({
+      error: "Challenge not found"
+    })
+  }
+
+  const updt = await userModel.findOneAndUpdate(
+    { _id: req.body.userId },
+    { $push: { inProgressChallenges: { 
+      idChallenge: req.body.challengeId, 
+      startedAt: dayjs()
+    }}}
+  )
+
+  console.log(updt)
+  
+  return res.status(200).json({
+    message: "update"
+  })
+}
+
+const completedChallenges = async (req: Request, res: Response) => {
+  const completedUserChallenges = await challengeUserModel.findById( req.body.userId ).exec()
+
+  if (!completedUserChallenges) {
+    return res.status(404).json({
+      error: "No challenges completed"
+    })
+  }
+
+  return res.status(200).json({
+    message: completedUserChallenges
+  })
+} 
+
 export default {
   sendChallengeSolve,
-  setChallenge
+  startChallenge,
+  completedChallenges
 }
