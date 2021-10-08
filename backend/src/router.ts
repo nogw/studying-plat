@@ -30,7 +30,7 @@ router.route("/challenge/user/send")
 router.route("/challenge/user/start")
   .post(challengeUserController.startChallenge)
 
-router.route("/challenge/user/completed")
-  .get(challengeUserController.completedChallenges)
+router.route("/challenge/user/challenges")
+  .get(challengeUserController.userChallenges)
 
 export default router

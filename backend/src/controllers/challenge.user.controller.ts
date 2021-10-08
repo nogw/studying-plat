@@ -7,29 +7,42 @@ import User from '../models/user.model'
 import userModel, { ISchemaUser } from '../models/user.model'
 
 const sendChallengeSolve = async (req: Request, res: Response) => {
-  const challengeExists = await challengeAdminModel.find({ _id: req.body.challengeId }).exec()
-  
+  const userExists = await User.exists({ _id: req.body.userId })
+  const challengeExists = await challengeAdminModel.exists({ _id: req.body.challengeId })
+  const userStartThisChallenge = await challengeUserModel.findOne({ challengeId: req.body.challengeId, userId: req.body.userId, })
+
   if (!challengeExists) {
     return res.status(404).json({
       error: "Challenge not found."
     })
-  } 
+  }
   
-  try {
-    const challenge = new challengeUserModel({
-      challengeId: req.body.challengeId,
-      userId: req.body.userId,
-      solution: req.body.solution,
-      time: req.body.time,
-      approved: "await" 
+  if (!userExists) {
+    return res.status(404).json({
+      error: "User not found."
     })
-    
-    challenge.save()
-    .catch((error: string | object) => {
-      return res.status(400).json({
-        error: error
-      })
+  }
+
+  console.log(userStartThisChallenge)
+  if (userStartThisChallenge) {
+    return res.status(400).json({
+      error: "Challenge already send"
     })
+  }
+
+  const challenge = await new challengeUserModel({
+    challengeId: req.body.challengeId,
+    userId: req.body.userId,
+    solution: req.body.solution,
+    time: req.body.time,
+    approved: "in progress"
+  })
+
+  console.log(challenge)
+
+  return res.status(200).json({
+    message: "challenge"
+  })
 
     // User.findOneAndUpdate(
     //   { _id: req.body.userId },
@@ -49,11 +62,6 @@ const sendChallengeSolve = async (req: Request, res: Response) => {
     //     }
     //   }
     // )
-  } catch (error) {
-    return res.status(400).json({
-      error: error
-    })
-  }
 }
 
 const startChallenge = async (req: Request, res: Response) => {
@@ -80,22 +88,22 @@ const startChallenge = async (req: Request, res: Response) => {
   })
 }
 
-const completedChallenges = async (req: Request, res: Response) => {
-  const completedUserChallenges = await challengeUserModel.findById( req.body.userId ).exec()
+const userChallenges = async (req: Request, res: Response) => {
+  const completedOrInProgressUserChallenges = await User.find({ _id: req.body.userId }).select("completedChallenges, inProgressChallenges").exec()
 
-  if (!completedUserChallenges) {
+  if (!completedOrInProgressUserChallenges) {
     return res.status(404).json({
       error: "No challenges completed"
     })
   }
 
   return res.status(200).json({
-    message: completedUserChallenges
+    message: completedOrInProgressUserChallenges
   })
 } 
 
 export default {
   sendChallengeSolve,
   startChallenge,
-  completedChallenges
+  userChallenges
 }

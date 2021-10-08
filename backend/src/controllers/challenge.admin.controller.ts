@@ -119,9 +119,6 @@ const setChallenge = async (req: Request, res: Response) => {
   // TODO: check if the upload is done by the logged in user, and check if user is admin
 
   switch (req.body.set) {
-    case "drop":
-      updateStatusInModel("dropped")
-      break;
     case "approve":
       updateStatusInModel(true)
       break;
