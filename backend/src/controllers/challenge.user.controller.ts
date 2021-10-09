@@ -66,6 +66,8 @@ const sendChallengeSolve = async (req: Request, res: Response) => {
 
 const startChallenge = async (req: Request, res: Response) => {
   const challengeExists = await challengeAdminModel.find({ _id: req.body.challengeId }).exec()
+  const userStartThisChallenge = await User.findOne({ _id: req.body.userId, "inProgressChallenges.idChallenge": req.body.challengeId })
+  const userCompleteThisChallenge = await User.findOne({ _id: req.body.userId, "completedChallenges.idChallenge": req.body.challengeId })
 
   if (!challengeExists) {
     return res.status(404).json({
@@ -73,10 +75,19 @@ const startChallenge = async (req: Request, res: Response) => {
     })
   }
 
+  console.log(userStartThisChallenge)
+  if (userStartThisChallenge || userCompleteThisChallenge) {
+    return res.status(400).json({
+      error: "Challenge cannot be started"
+    })
+  }
+
   const updt = await userModel.findOneAndUpdate(
     { _id: req.body.userId },
     { $push: { inProgressChallenges: { 
       idChallenge: req.body.challengeId, 
+      title: challengeExists[0].title,
+      description: challengeExists[0].description,
       startedAt: dayjs()
     }}}
   )
@@ -89,7 +100,9 @@ const startChallenge = async (req: Request, res: Response) => {
 }
 
 const userChallenges = async (req: Request, res: Response) => {
-  const completedOrInProgressUserChallenges = await User.find({ _id: req.body.userId }).select("completedChallenges, inProgressChallenges").exec()
+  const slug = req.params.slug
+
+  const completedOrInProgressUserChallenges = await User.find({ _id: slug }).select("completedChallenges, inProgressChallenges").exec()
 
   if (!completedOrInProgressUserChallenges) {
     return res.status(404).json({

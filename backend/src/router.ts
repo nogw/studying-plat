@@ -30,7 +30,7 @@ router.route("/challenge/user/send")
 router.route("/challenge/user/start")
   .post(challengeUserController.startChallenge)
 
-router.route("/challenge/user/challenges")
+router.route("/challenge/user/challenges/:slug")
   .get(challengeUserController.userChallenges)
 
 export default router

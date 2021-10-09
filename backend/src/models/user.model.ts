@@ -2,6 +2,8 @@ import mongoose, { Document, Schema } from 'mongoose'
 
 export interface IArrayChallenges extends Document {
   idChallenge: string,
+  title: string,
+  description: string,
   startedAt: string,
   completedAt: string
 }
@@ -19,6 +21,12 @@ export interface ISchemaUser extends Document {
 const ChallengesSchema = new Schema<IArrayChallenges>(
   {
     idChallenge: {
+      type: String
+    },
+    title: {
+      type: String,
+    },
+    description: {
       type: String
     },
     startedAt: {
