@@ -7,32 +7,33 @@ import { useRouter } from 'next/router'
 function ChallengeItemList({ id, name, desc }) {
   const Router = useRouter()
   const handleStartChallenge = async () => {
-    NProgress.start();
-    const response: any = await api.post(`/challenge/user/start`, {
-      userId: "6160566cde2d7525a08dcd79",
-      challengeId: id,
-    })
-
-    if (response.status == "200") {
+    try {
+      NProgress.start();
+      const response: any = await api.post(`/challenge/user/start`, {
+        userId: "6160566cde2d7525a08dcd79",
+        challengeId: id,
+      })
       NProgress.done();
       Router.push(`/desafio/${id}`)
+    } catch (error) {
+      console.log(error)
     }
   }
 
   return (
     <Link href={`/desafio/${id}`}>
-    <ContainerC>
-      <div className="circle"/>
-      <div className="texts">
-        <h2>{name}</h2>
-        <h5>{desc}</h5>
-      </div>
-      <Link href={`/`}>
-        <div className="leave" onClick={handleStartChallenge}>
-          START
+      <ContainerC>
+        <div className="circle"/>
+        <div className="texts">
+          <h2>{name}</h2>
+          <h5>{desc}</h5>
         </div>
-      </Link>
-    </ContainerC>
+        <Link href={`/`}>
+          <div className="leave" onClick={handleStartChallenge}>
+            START
+          </div>
+        </Link>
+      </ContainerC>
     </Link>
   );
 };

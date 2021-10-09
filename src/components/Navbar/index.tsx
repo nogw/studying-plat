@@ -63,7 +63,7 @@ function NavbarMobile( { show, setShow }) {
               <Li to="/perfil" content="Perfil"/>
               <Li to="/" content="Desafios"/>
               <Li to="/completos" content="Completos"/>
-              <Li to="/progresso" content="Progresso"/>
+              <Li to="/progresso" content="Em progresso"/>
             </List>
             <Bgc
               initial={{ opacity: 0 }}
@@ -104,15 +104,15 @@ function Navbar() {
               </Link>
             </NavBtn>
             
-            <NavBtn active={currentRoute == "/completos"}>
-              <Link href="/completos">
-                Completos
+            <NavBtn active={currentRoute == "/progresso"}>
+              <Link href="/progresso">
+                Em Progresso
               </Link>
             </NavBtn>
 
-            <NavBtn active={currentRoute == "/progresso"}>
-              <Link href="/progresso">
-                Progresso
+            <NavBtn active={currentRoute == "/completos"}>
+              <Link href="/completos">
+                Completos
               </Link>
             </NavBtn>
           </div>

@@ -94,6 +94,7 @@ interface NavBtnProps {
 
 export const NavBtn = styled.div<NavBtnProps>`
   a {
+    white-space: nowrap; 
     background-color: ${props => props.active ? "#768BD4" : "#202225"};
     border-radius: 8px;
     padding: 8px 16px;

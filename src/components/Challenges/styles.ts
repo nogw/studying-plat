@@ -29,7 +29,7 @@ export const ChallengesContainer = styled.div `
 
 export const ChallengesList = styled.div `
   background-color: #202225;
-  width: 600px;
+  width: 500px;
   border-radius: 8px;
 
   ${ContainerC}:not(:last-child) {
