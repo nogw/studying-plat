@@ -24,13 +24,23 @@ router.route("/challenge/admin/set")
 router.route("/challenge/admin/get/:slug")
   .get(challengeAdminController.getChallenge)
 
+router.route("/challenge/user/start")
+.post(challengeUserController.startChallenge)
+
+router.route("/challenge/user/leave")
+  .post(challengeUserController.leaveChallenge)
+
 router.route("/challenge/user/send")
   .post(challengeUserController.sendChallengeSolve)
 
-router.route("/challenge/user/start")
-  .post(challengeUserController.startChallenge)
+router.route("/challenge/user/challenges/list/:slug")
+  .get(challengeUserController.userAvailableChallenges)
 
 router.route("/challenge/user/challenges/:slug")
-  .get(challengeUserController.userChallenges)
+  .get(challengeUserController.userCompletedOrInProgressChallenges)
+
+router.route("/challenge/user/challenge/:userId/:challengeId")
+  .get(challengeUserController.userGetChallenge)
+
 
 export default router
