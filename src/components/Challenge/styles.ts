@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import TextareaAutosize from "react-textarea-autosize";
 
 export const LineCounter = styled.div`
   position: absolute;
@@ -17,7 +18,7 @@ export const LineCounter = styled.div`
   }
 `;
 
-export const Editor = styled.div`
+export const EditorContainer = styled.div`
   background: #1a1d1f;
   padding: 16px 0;
   box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.2);
@@ -25,6 +26,76 @@ export const Editor = styled.div`
   margin: auto;
   overflow-y: hidden;
   position: relative;
+
+`;
+
+export const Solution = styled.div`
+  border-top: 2px solid #343434;
+  padding-top: 12px;
+
+  .title {
+    font-size: calc(14px + 6 * ((100vw - 600px) / 2000));
+    color: #cbcbcb;
+  }
+
+  h2 {
+    font-size: calc(12px + 6 * ((100vw - 600px) / 2000));
+    color: #cbcbcb;
+    margin-top: 10px;
+    margin-bottom: 14px;
+  }
+`;
+
+export const Editor = styled.div`
+  position: relative;
+  margin-left: 48px;
+`;
+
+const common = css`
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  line-height: 1.5;
+  display: block;
+
+  font-size: 1em;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+`;
+
+export const Textarea = styled(TextareaAutosize)`
+  ${common};
+  width: 100%;
+  color: white;
+  background: none;
+  resize: none;
+  -webkit-font-smoothing: antialiased;
+  opacity: 0.5;
+  overflow: hidden;
+`;
+
+export const Code = styled.pre`
+  ${common};
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background: none !important;
+  pointer-events: none;
+  overflow: hidden;
+  color: transparent;
+
+  &,
+  code {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 `;
 
 export const Container = styled.div`
@@ -50,7 +121,6 @@ export const Container = styled.div`
       }
     }
   }
-  /* margin-bottom: 100px; */
   
   h1 {
     font-size: calc(24px + 6 * ((100vw - 600px) / 2000));

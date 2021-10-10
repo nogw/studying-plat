@@ -1,4 +1,4 @@
-import { ContainerC } from './styles';
+import { ContainerC, Item } from './styles';
 import Link from 'next/link'
 import { api } from '../../utils/api';
 import NProgress from 'nprogress'; 
@@ -9,8 +9,8 @@ function ChallengeItemList({ id, name, desc }) {
   const handleStartChallenge = async () => {
     try {
       NProgress.start();
-      const response: any = await api.post(`/challenge/user/start`, {
-        userId: "6160566cde2d7525a08dcd79",
+      await api.post(`/challenge/user/start`, {
+        userId: "6160e47eef372319884f034c",
         challengeId: id,
       })
       NProgress.done();
@@ -21,20 +21,18 @@ function ChallengeItemList({ id, name, desc }) {
   }
 
   return (
-    <Link href={`/desafio/${id}`}>
-      <ContainerC>
-        <div className="circle"/>
-        <div className="texts">
-          <h2>{name}</h2>
-          <h5>{desc}</h5>
-        </div>
-        <Link href={`/`}>
-          <div className="leave" onClick={handleStartChallenge}>
-            START
+    <Item>
+      <Link href={`/desafio/${id}`}>
+        <ContainerC>
+          <div className="circle"/>
+          <div className="texts">
+            <h2>{name}</h2>
+            <h5>{desc}</h5>
           </div>
-        </Link>
-      </ContainerC>
-    </Link>
+        </ContainerC>
+      </Link>
+      <div className="leave" onClick={handleStartChallenge}>START</div>
+    </Item>
   );
 };
 
