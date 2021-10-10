@@ -1,58 +1,83 @@
 import { ChallengesContainer, ChallengesList } from '../Challenges/styles';
-import { Container, ItemList } from './styles';
+import { Container, Item, ItemList } from './styles';
 import {  } from './styles';
 import Link from 'next/link'
 import { api } from '../../utils/api';
 import NProgress from 'nprogress'; 
 import { Empty } from '../CompletedChallenges/styles';
+import { useEffect, useState } from 'react';
 // import { useRouter } from 'next/router'
 
-function ChallengeItemList({ id, name, desc }) {
+function ChallengeItemList({ idChallenge, id, name, desc, challengesList, setChallengesList }) {
   // const Router = useRouter()
-  const handleStartChallenge = async () => {
-    NProgress.start();
-    // const response: any = await api.post(`/challenge/user/start`, {
-    //   userId: "6160566cde2d7525a08dcd79",
-    //   challengeId: id,
-    // })
 
-    // if (response.status == "200") {
-    //   NProgress.done();
-    //   Router.push(`/desafio/${id}`)
-    // }
+  const removeFromState = () => {
+    const array = [...challengesList]
+    const index = array.findIndex( (x: any) => x._id === id);
+    array.splice(index, 1);
+    setChallengesList(array)
   }
 
+  const handleStartChallenge = async () => {
+    NProgress.start();
+    console.log(`challengeid - ${idChallenge}`)
+    console.log(`_id - ${id}`)
+
+    try {      
+      const response: any = await api.post(`/challenge/user/leave`, {
+        userId: "6160e47eef372319884f034c",
+        challengeId: id,
+      })
+      NProgress.done();
+      removeFromState()
+      console.log(response)
+    } catch (error) {
+      NProgress.done();
+      console.log(error)
+    }
+  }
+
+
+
   return (
-    // <Link href={`/desafio/${id}`}>
-      <ItemList>
-        <div className="circle"/>
-        <div className="texts">
-          <h2>{name}</h2>
-          <h5>{desc}</h5>
-        </div>
-        <div className="leave" onClick={handleStartChallenge}>
-          LEAVE
-        </div>
-      </ItemList>
-    // </Link>
+    <Item>
+      <Link href={`/desafio/${idChallenge}`}>
+        <ItemList>
+          <div className="circle"/>
+          <div className="texts">
+            <h2>{name}</h2>
+            <h5>{desc}</h5>
+          </div>
+        </ItemList>
+      </Link>
+      <button className="leave" onClick={handleStartChallenge}>LEAVE</button>
+    </Item>
   );
 };
 
 function ProgressChallenges({ challenges }) {
+  const [challengesList, setChallengesList] = useState(challenges)
+  useEffect(() => {
+    console.log(challengesList)
+  }, [])
+
   return (
     <Container>
       <ChallengesContainer>
         {
-          challenges.inProgressChallenges ? (
+          challengesList.length > 0 ? (
             <ChallengesList>
               {
-                challenges.inProgressChallenges.map(c => {
+                challengesList.map(c => {
                   return (
                     <ChallengeItemList
                       key={c._id}
+                      id={c._id}
                       name={c.title}
                       desc={c.description}
-                      id={c._id}
+                      idChallenge={c.idChallenge}
+                      setChallengesList={setChallengesList}
+                      challengesList={challengesList}
                     />
                   )
                 })
