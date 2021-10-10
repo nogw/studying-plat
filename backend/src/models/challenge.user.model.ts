@@ -28,7 +28,7 @@ const challengeUserSchema = new Schema<ISchemaChallengeUser>(
       required: true,
     },
     approved: {
-      type: Boolean || String
+      type: Schema.Types.Mixed
     }
   }
 )

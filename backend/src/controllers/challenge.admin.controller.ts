@@ -6,7 +6,7 @@ const isAdmin = (req: Request) => {
   return req.body.token_payload.permission === "admin"
 }
 
-const createChallenge = (req: Request, res: Response) => {
+const createChallenge = async (req: Request, res: Response) => {
   if (!isAdmin(req)) {
     return res.status(403).json({
       error: "You need to be an administrator to create challenges"
@@ -22,17 +22,8 @@ const createChallenge = (req: Request, res: Response) => {
       points: req.body.points,
       limit: req.body.limit
     })
-    challenge.save()
-    .then(() => {
-      return res.status(201).json({
-        message: "Challenge created"
-      })
-    })
-    .catch((error: string | object) => {
-      return res.status(400).json({
-        error: error
-      })
-    })
+
+    await challenge.save()
   } catch (error) {
     return res.status(400).json({
       error: error
@@ -41,12 +32,6 @@ const createChallenge = (req: Request, res: Response) => {
 }
 
 const listChallenges = async (req: Request, res: Response) => {
-  // if (!isAdmin(req)) {
-  //   return res.status(403).json({
-  //     error: "You need to be an administrator to list challenges"
-  //   })
-  // }
-
   try {
     const listExistingChallenges = await ChallengeAdmin.find({}).sort({ createdAt: 'desc'}).exec()
     if (!listExistingChallenges) {
