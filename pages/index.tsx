@@ -6,6 +6,10 @@ import { api } from '../src/utils/api'
 import { useEffect } from 'react'
 
 export default function Home({ challenges }) {
+  useEffect(() => {
+    console.log(challenges)
+  }, [])
+
   return (
     <Layout>
       <Challenges challenges={challenges}/>
@@ -14,10 +18,15 @@ export default function Home({ challenges }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const response: any = await api.get("/challenge/admin/list")
-  const challenges = response.data.message
-
-  return {
-    props: { challenges }
+  try {
+    const response: any = await api.get("/challenge/user/challenges/list/6160e47eef372319884f034c")
+    const challenges = response.data.message
+    return {
+      props: { challenges }
+    }
+  } catch (_) { 
+    return {
+      props: { challenges: [] }
+    }
   }
 }
