@@ -3,11 +3,11 @@ import Challenge from '../../src/components/Challenge'
 import { api } from '../../src/utils/api';
 import { GetServerSideProps } from 'next';
 
-export default function SlugTsx({ challenges }) {
+export default function SlugTsx({ challenge, solution }: { challenge: any, solution?: any }) {
   return (
     <>
       <Layout>
-        <Challenge id={challenges._id} markdown={ challenges.challenge }/>
+        <Challenge solution={solution} id={challenge._id} markdown={ challenge.challenge }/>
       </Layout>
     </>
   );
@@ -16,9 +16,18 @@ export default function SlugTsx({ challenges }) {
 export const getServerSideProps: GetServerSideProps = async ( ctx ) => {
   const { slug } = ctx.query
   const response: any = await api.get(`/challenge/admin/get/${slug}`)
-  const challenges = response.data.message
+  const responseSolution: any = await api.get(`/challenge/user/challenge/6160e47eef372319884f034c/${slug}`)
+
+  if (!response) {
+    return {
+      notFound: true
+    }
+  }
 
   return {
-    props: { challenges }
+    props: {
+      challenge: response.data.message,
+      solution: responseSolution.data.message
+    }
   }
 }
