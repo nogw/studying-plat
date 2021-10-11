@@ -1,10 +1,10 @@
 import { GetServerSideProps } from 'next';
-import AdminListChallenges from '../src/components/AdminListChallenges'
+import AdminPanel from '../src/components/AdminPanel';
 import { api } from '../src/utils/api';
 
 function Admin({ challenges }) {
   return (
-    <AdminListChallenges challenges={challenges}/>
+    <AdminPanel challenges={challenges}/>
   );
 }
 
