@@ -9,7 +9,8 @@ import {
   ListItem, 
   LinkRedirect,
   ContainerNav,
-  NavBtnMbl
+  NavBtnMbl,
+  Profile
 } from './styles';
 import Link from 'next/link'
 
@@ -119,9 +120,9 @@ function Navbar() {
         </div>
         <div className="box last">
           <Link href="/perfil">
-            <div className="profile">
+            <Profile active={currentRoute == "/perfil"}>
               <h1>AL</h1>
-            </div>
+            </Profile>
           </Link>
           <div className="navbtn">
             {

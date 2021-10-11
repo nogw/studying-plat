@@ -64,23 +64,6 @@ export const Container = styled.div`
     justify-content: center;
   }
 
-  .profile {
-    background-color: #202225;
-    border-radius: 12px;
-    height: 36px;
-    width: 36px;
-    margin-left: auto;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    h1 {
-      font-size: 16px;
-      color: #fff;
-    }
-  }
-
   @media screen and (max-width: 640px) {
     .nav {
       display: none;
@@ -92,6 +75,29 @@ interface NavBtnProps {
   active: boolean
 }
 
+export const Profile = styled.div<NavBtnProps>`
+  background-color: ${props => props.active ? "#768BD4" : "#202225"};
+  border-radius: 12px;
+  height: 36px;
+  width: 36px;
+  margin-left: auto;
+
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 400ms ease all;
+
+  &:hover {
+    background-color: #768BD4;
+  }
+
+  h1 {
+    font-size: 16px;
+    color: #fff;
+  }
+`;
+
 export const NavBtn = styled.div<NavBtnProps>`
   a {
     white-space: nowrap; 
@@ -102,6 +108,11 @@ export const NavBtn = styled.div<NavBtnProps>`
     font-size: 14px;
     text-decoration: none;
     font-weight: bold;
+    transition: 400ms ease all;
+
+    &:hover {
+      background-color: #768BD4;
+    }
   }
 `;
 
