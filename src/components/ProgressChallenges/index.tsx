@@ -37,8 +37,6 @@ function ChallengeItemList({ idChallenge, id, name, desc, challengesList, setCha
     }
   }
 
-
-
   return (
     <Item>
       <Link href={`/desafio/${idChallenge}`}>
@@ -66,7 +64,7 @@ function ProgressChallenges({ challenges }) {
       <ChallengesContainer>
         {
           challengesList.length > 0 ? (
-            <ChallengesList>
+            <ChallengesList className="challenges">
               {
                 challengesList.map(c => {
                   return (

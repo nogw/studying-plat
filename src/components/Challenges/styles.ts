@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ContainerC } from '../ChallengeItemList/styles';
+import { Item } from '../ChallengeItemList/styles';
 
 export const Container = styled.div`
   display: flex;
@@ -32,7 +32,7 @@ export const ChallengesList = styled.div `
   width: 500px;
   border-radius: 8px;
 
-  ${ContainerC}:not(:last-child) {
+  ${Item}:not(:last-child) {
     border-bottom: 1px solid #26282b;
     border-spacing: 20px 20px;
   }

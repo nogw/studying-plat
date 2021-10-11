@@ -1,11 +1,5 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  @media screen and (max-width: 640px) {
-    width: 100%;
-  }
-`;
-
 export const Item = styled.div`
   position: relative;
 
@@ -29,6 +23,19 @@ export const Item = styled.div`
       border: 2px solid #e63946;
       color: #e63946;
     }
+  }
+`;
+
+export const Container = styled.div`
+  .challenges {
+    ${Item}:not(:last-child) {
+      border-bottom: 1px solid #26282b;
+      border-spacing: 20px 20px;
+    }
+  }
+  
+  @media screen and (max-width: 640px) {
+    width: 100%;
   }
 `;
 

@@ -1,18 +1,21 @@
 import { ChallengesContainer, ChallengesList } from '../Challenges/styles';
 import { Container, ItemList, Empty } from './styles';
 import Link from 'next/link'
+import { Item } from '../ChallengeItemList/styles';
 
 function ChallengeItemList({ id, name, desc }) {
   return (
-    <Link href={`/desafio/${id}`}>
-      <ItemList>
-        <div className="circle"/>
-        <div className="texts">
-          <h2>{name}</h2>
-          <h5>{desc}</h5>
-        </div>
-      </ItemList>
-    </Link>
+    <Item>
+      <Link href={`/desafio/${id}`}>
+        <ItemList>
+          <div className="circle"/>
+          <div className="texts">
+            <h2>{name}</h2>
+            <h5>{desc}</h5>
+          </div>
+        </ItemList>
+      </Link>
+    </Item>
   );
 };
 
