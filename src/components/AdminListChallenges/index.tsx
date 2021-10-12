@@ -25,8 +25,14 @@ function Admin({ challenges }) {
   return (
     <Container>
       {
-        challenges.map(v => {
-          return <ChallengeItemList idChallenge={v._id} name={v.title} desc={v.description}/>
+        challenges?.map(v => {
+          return (
+            <ChallengeItemList 
+              idChallenge={v._id} 
+              name={v.title} 
+              desc={v.description}
+            />
+          )
         })
       }
     </Container>

@@ -4,7 +4,7 @@ export const Container = styled.div`
   background-color: #202225;
   padding: 12px;
   border-radius: 8px;
-  height: 100%;
+  height: auto;
   display: flex;
 
   .inputs { 
@@ -17,6 +17,8 @@ export const Container = styled.div`
       padding: 12px;
       background-color: #2f3134;
       border: 2px solid #2f3134;
+      color: #fff;
+      font-weight: bold;
       outline: none;
       border-radius: 8px;
 
