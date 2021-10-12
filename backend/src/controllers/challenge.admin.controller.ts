@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import ChallengeAdmin, { ISchemaChallengeAdmin } from '../models/challenge.admin.model'
+import challengeUserModel from '../models/challenge.user.model'
 import userModel from '../models/user.model'
 
 const isAdmin = (req: Request) => {
@@ -24,6 +25,24 @@ const createChallenge = async (req: Request, res: Response) => {
     })
 
     await challenge.save()
+  } catch (error) {
+    return res.status(400).json({
+      error: error
+    })
+  }
+}
+
+const listChallengesToApprove = async (req: Request, res: Response) => {
+  try {
+    const listExistingChallenges = await challengeUserModel.find({}).select({"_id": 1, "challengeId": 1, "time": 1}).sort({ createdAt: 'desc'}).exec()
+    if (!listExistingChallenges) {
+      return res.status(404).json({
+        error: "No challenge created."
+      })
+    }
+    return res.status(200).json({
+      message: listExistingChallenges
+    })
   } catch (error) {
     return res.status(400).json({
       error: error
@@ -120,6 +139,7 @@ const setChallenge = async (req: Request, res: Response) => {
 
 export default {
   createChallenge,
+  listChallengesToApprove,
   listChallenges,
   getChallenge,
   setChallenge

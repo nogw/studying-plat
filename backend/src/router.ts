@@ -21,6 +21,9 @@ router.route("/challenge/admin/list")
 router.route("/challenge/admin/set")
   .post(challengeAdminController.setChallenge)
 
+router.route("/challenge/admin/challengestoapprove")
+  .get(challengeAdminController.listChallengesToApprove)
+
 router.route("/challenge/admin/get/:slug")
   .get(challengeAdminController.getChallenge)
 
