@@ -2,18 +2,21 @@ import { GetServerSideProps } from 'next';
 import AdminPanel from '../src/components/AdminPanel';
 import { api } from '../src/utils/api';
 
-function Admin({ challenges }) {
+function Admin({ challenges, challengesToApprove }) {
   return (
-    <AdminPanel challenges={challenges}/>
+    <AdminPanel challenges={challenges} challengesToApprove={challengesToApprove}/>
   );
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const response: any = await api.get("/challenge/admin/list")
-  const challenges = response.data.message
+  const challenges: any = await api.get("/challenge/admin/list")
+  const challengesToApprove: any = await api.get("/challenge/admin/challengestoapprove")
 
   return {
-    props: { challenges }
+    props: { 
+      challenges: challenges.data.message,  
+      challengesToApprove: challengesToApprove.data.message
+    }
   }
 }
 
