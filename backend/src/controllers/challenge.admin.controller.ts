@@ -8,11 +8,11 @@ const isAdmin = (req: Request) => {
 }
 
 const createChallenge = async (req: Request, res: Response) => {
-  if (!isAdmin(req)) {
-    return res.status(403).json({
-      error: "You need to be an administrator to create challenges"
-    })
-  }
+  // if (!isAdmin(req)) {
+  //   return res.status(403).json({
+  //     error: "You need to be an administrator to create challenges"
+  //   })
+  // }
   
   try {
     const challenge = new ChallengeAdmin({
@@ -25,6 +25,10 @@ const createChallenge = async (req: Request, res: Response) => {
     })
 
     await challenge.save()
+
+    return res.status(200).json({
+      message: challenge
+    })
   } catch (error) {
     return res.status(400).json({
       error: error
@@ -34,7 +38,7 @@ const createChallenge = async (req: Request, res: Response) => {
 
 const listChallengesToApprove = async (req: Request, res: Response) => {
   try {
-    const listExistingChallenges = await challengeUserModel.find({}).select({"_id": 1, "challengeId": 1, "time": 1}).sort({ createdAt: 'desc'}).exec()
+    const listExistingChallenges = await challengeUserModel.find({}).select({"_id": 1, "userId": 1, "challengeId": 1, "time": 1}).sort({ createdAt: 'desc'}).exec()
     if (!listExistingChallenges) {
       return res.status(404).json({
         error: "No challenge created."
@@ -103,37 +107,64 @@ const setChallenge = async (req: Request, res: Response) => {
     })
   } 
 
-  const updateStatusInModel = (status: string | boolean) => {
-    userModel.findOneAndUpdate(
-      { _id: req.body.userId, "completedChallenges.idChallenge": req.body.challengeId },
-      { $set: { "completedChallenges.$.approved": status } },
-      { upsert: true },
-      (error: any, doc: any) => {
-        if (error) {
-          return res.status(400).json({
-            error: error
-          })
-        } else {
-          console.log(doc);
-        }
-      }
-    )
+  const updateStatusInModel = async (status: boolean) => {
+    try {
+      await challengeUserModel.findOneAndUpdate(
+        { challengeId: req.body.challengeId, userId: req.body.userId, },
+        { approved: status }
+      )
+
+      return res.status(200).json({
+        message: "ok"
+      })
+    } catch (error) {
+      return res.status(400).json({
+        error: error
+      })
+    }
   }
 
   // TODO: check if the upload is done by the logged in user, and check if user is admin
 
+  const inProgressChallenge = await userModel.findOne({ _id: req.body.userId, "inProgressChallenges._id": req.body.challengeId })
+
   switch (req.body.set) {
-    case "approve":
+    case true:
       updateStatusInModel(true)
+      
+      await userModel.findOneAndUpdate(
+        { _id: req.body.userId },
+        { $pull: { inProgressChallenges: { 
+          _id: req.body.challengeId
+        }}}
+      )
+
+      await userModel.findOneAndUpdate(
+        { _id: req.body.userId },
+        { $push: { completedChallenges: { 
+          idChallenge: req.body.challengeId, 
+          title: challengeExists.title,
+          description: challengeExists.description,
+          startedAt: inProgressChallenge.startedAt,
+        }}}
+      )
+
       break;
-    case "reject":
+    case false:
       updateStatusInModel(false)
+
+      await userModel.findOneAndUpdate(
+        { _id: req.body.userId },
+        { $pull: { inProgressChallenges: { 
+          _id: req.body.challengeId
+        }}}
+      )
+
       break;
     default:
       return res.status(400).json({
-        error: "need option to set"
-      })
-      break;
+        error: "Send a valid option"
+      }); break;
   }
 }
 
