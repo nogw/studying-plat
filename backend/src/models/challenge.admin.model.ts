@@ -14,21 +14,28 @@ const challengeAdminSchema = new Schema<ISchemaChallengeAdmin>(
   {
     title: {
       type: String,
+      required: true
     },
     description: {
       type: String,
+      required: true
     },
     challenge: {
       type: String,
+      required: true
     },
     difficulty: {
-      type: String
+      type: String,
+      enum: ["easy", "medium", "hard"],
+      required: true
     },
     points: {
       type: Number,
+      required: true
     },
     limit: {
       type: String,
+      required: true
     },
   }
 )
