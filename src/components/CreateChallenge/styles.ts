@@ -13,6 +13,11 @@ export const Container = styled.div`
     gap: 12px;
     height: 100%;
 
+    .difficulty {
+      display: flex;
+      gap: 12px;
+    }
+
     input {
       padding: 12px;
       background-color: #2f3134;
@@ -30,7 +35,7 @@ export const Container = styled.div`
       }
     }
     
-    button {
+    .send {
       padding: 8px 8px 9px 8px;
       background-color: #2f3134 ;
       cursor: pointer;
@@ -48,7 +53,12 @@ export const Container = styled.div`
         background-color: #6cba6b;
         border : 2px solid #6cba6b;
       }
-    }
+    }     
+  }
+
+  @media screen and (max-width: 750px) {
+    width: 100%;
+    flex-direction: column;
   }
 `;
 
@@ -107,5 +117,11 @@ export const MarkdownContainer = styled.div`
     padding: 6px;
     height: 215px;
     width: 100%;
+  }
+
+  @media screen and (max-width: 750px) {
+    margin-left: 0px;
+    margin-top: 12px;
+    flex-direction: column;
   }
 `;
