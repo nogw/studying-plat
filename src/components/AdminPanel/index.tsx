@@ -2,13 +2,15 @@ import { Container, Column } from './styles';
 import AdminListChallenges from '../AdminListChallenges'
 import CreateChallenge from '../CreateChallenge';
 import ChallengesToApprove from '../ChallengesToApprove';
+import { useState } from 'react';
 
 function AdminPanel({ challenges, challengesToApprove }) {
+  const [challengesState, setChallengesState] = useState(challenges)
   return (
     <Container>
-      <AdminListChallenges challenges={challenges}/>
+      <AdminListChallenges challenges={challengesState}/>
       <Column>
-        <CreateChallenge/>
+        <CreateChallenge challengesState={challengesState} setChallenges={setChallengesState}/>
         <ChallengesToApprove challengesToApprove={challengesToApprove}/>
       </Column>
     </Container>
