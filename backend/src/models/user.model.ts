@@ -32,8 +32,8 @@ const ChallengesSchema = new Schema<IArrayChallenges>(
     startedAt: {
       type: String
     },
-    completedAt: {
-      type: String,
+    approved: {
+      type: Schema.Types.Mixed,
       required: false
     }
   }
