@@ -34,6 +34,7 @@ const ChallengesSchema = new Schema<IArrayChallenges>(
     },
     approved: {
       type: Schema.Types.Mixed,
+      default: "in progress",
       required: false
     }
   }
