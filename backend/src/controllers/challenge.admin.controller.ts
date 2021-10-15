@@ -154,10 +154,17 @@ const setChallenge = async (req: Request, res: Response) => {
       updateStatusInModel(false)
 
       await userModel.findOneAndUpdate(
-        { _id: req.body.userId },
-        { $pull: { inProgressChallenges: { 
-          _id: req.body.challengeId
-        }}}
+        { _id: req.body.userId, "inProgressChallenges.idChallenge": req.body.challengeId },
+        { $set: {
+          "inProgressChallenges.$.approved": false
+        }}
+      )
+
+      await challengeUserModel.findOneAndUpdate(
+        { _id: req.body.userId, "inProgressChallenges.challengeId": req.body.challengeId },
+        { $set: {
+          approved: false
+        }}
       )
 
       break;
