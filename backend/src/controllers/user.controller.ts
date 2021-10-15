@@ -111,7 +111,24 @@ const userLogin = async (req: Request, res: Response) => {
   }
 }
 
+const userInfo = async (req: Request, res: Response) => {
+  const userId = req.params.slug
+
+  const userExists = await User.findOne({ _id: userId }).select({"name": 1, "completedChallenges": 1, "inProgressChallenges": 1})
+
+  if (!userExists) {
+    return res.status(404).json({
+      error: "User not found"
+    })
+  }
+
+  return res.status(200).json({
+    message: userExists
+  })
+}
+
 export default {
   userRegister,
-  userLogin
+  userLogin,
+  userInfo
 }
