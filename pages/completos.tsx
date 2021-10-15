@@ -18,7 +18,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const decode: any = jwt.decode(cookies)
   const response: any = await api.get(`/challenge/user/challenges/${decode.id}`)
   const challenges = response.data.message[0].completedChallenges
-  console.log(challenges)
+  
+  if (!cookies) {
+    return {
+      redirect: {
+        destination: "/connect",
+        permanent: false
+      }
+    }
+  }
 
   return {
     props: { challenges }

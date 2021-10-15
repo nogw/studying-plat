@@ -26,11 +26,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   console.log(user.name)
 
-  if (!user) {
+  if (!cookies) {
     return {
       redirect: {
         destination: "/connect",
-        permanent: true
+        permanent: false
       }
     }
   }

@@ -22,9 +22,19 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { "py.plat.user.id": cookies }  = nookies.get(ctx)
   const decode: any = jwt.decode(cookies)
 
+  if (!cookies) {
+    return {
+      redirect: {
+        destination: "/connect",
+        permanent: false
+      }
+    }
+  }
+  
   try {
     const response: any = await api.get(`/challenge/user/challenges/list/${decode.id}`)
     const challenges = response.data.message
+    
     return {
       props: { challenges }
     }

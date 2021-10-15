@@ -20,6 +20,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const challenges = response.data.message[0].inProgressChallenges
   console.log(challenges)
 
+  if (!cookies) {
+    return {
+      redirect: {
+        destination: "/connect",
+        permanent: false
+      }
+    }
+  }
+
   return {
     props: { challenges }
   }

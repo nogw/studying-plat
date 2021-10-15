@@ -22,11 +22,12 @@ export const getServerSideProps: GetServerSideProps = async ( ctx ) => {
   const response: any = await api.get(`/challenge/admin/get/${slug}`)
   const responseSolution: any = await api.get(`/challenge/user/challenge/${decode.id}/${slug}`)
 
-  console.log(responseSolution.data.message)
-
-  if (!response) {
+  if (!cookies) {
     return {
-      notFound: true
+      redirect: {
+        destination: "/connect",
+        permanent: false
+      }
     }
   }
 
