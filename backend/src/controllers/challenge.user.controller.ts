@@ -162,10 +162,6 @@ const userGetChallenge = async (req: Request, res: Response) => {
   const UserId = req.params.userId
   const ChallengeId = req.params.challengeId
 
-  console.log(UserId)
-  console.log(ChallengeId)
-  console.log("ChallengeId")
-
   const userSendThisChallenge = await challengeUserModel.findOne({ challengeId: ChallengeId, userId: UserId, })
 
   console.log(userSendThisChallenge)
