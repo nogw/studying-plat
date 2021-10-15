@@ -3,6 +3,7 @@ import express from 'express'
 import challengeAdminController from './controllers/challenge.admin.controller'
 import challengeUserController from './controllers/challenge.user.controller'
 import userController from './controllers/user.controller'
+import { isAdmin } from './middlewares/verify.middleware'
 
 const router = express.Router()
 
@@ -16,16 +17,19 @@ router.route("/user/info/:slug")
   .get(userController.userInfo)
 
 router.route("/challenge/admin/create")
+  .all(isAdmin)
   .post(challengeAdminController.createChallenge)
+
+router.route("/challenge/admin/challengestoapprove")
+  .all(isAdmin)
+  .get(challengeAdminController.listChallengesToApprove)
+
+router.route("/challenge/admin/set")
+  .all(isAdmin)
+  .post(challengeAdminController.setChallenge)
 
 router.route("/challenge/admin/list")
   .get(challengeAdminController.listChallenges)
-  
-router.route("/challenge/admin/set")
-  .post(challengeAdminController.setChallenge)
-
-router.route("/challenge/admin/get/:slug")
-  .get(challengeAdminController.getChallenge)
 
 router.route("/challenge/admin/get/:slug")
   .get(challengeAdminController.getChallenge)
