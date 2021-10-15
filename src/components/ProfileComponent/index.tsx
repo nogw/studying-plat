@@ -1,12 +1,26 @@
 import { Container } from './styles';
+import { FaCheckCircle, FaClock } from 'react-icons/fa'
 
-function ProfileComponent() {
+function ProfileComponent({ user }) {
   return (
     <Container>
-      <div className="icon">
-        <h2>AL</h2>
+      <div className="user">
+        <div className="user-icon">
+          <h2>{(user.name).substring(0, 2).toUpperCase()}</h2>
+        </div>
+        <h1>{user.name}</h1>
       </div>
-      <h1>Alisson Allen</h1>
+      
+      <div className="achievements">
+        <div className="completed">
+          <FaCheckCircle className="icon check"/>
+          <h1>{(user.completedChallenges).length}</h1>
+        </div>
+        <div className="inProgress">
+          <FaClock className="icon clock"/>
+          <h1>{(user.inProgressChallenges).length}</h1>
+        </div>
+      </div>
     </Container>
   );
 };
