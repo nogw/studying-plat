@@ -41,10 +41,10 @@ const sendChallengeSolve = async (req: Request, res: Response) => {
     await challenge.save()
 
     await userModel.findOneAndUpdate(
-      { _id: req.body.userId },
-      { $pull: { inProgressChallenges: { 
-        _id: req.body.challengeId
-      }}}
+      { _id: req.body.userId, "inProgressChallenges.idChallenge": req.body.challengeId },
+      { $set: {
+        "inProgressChallenges.$.approved": "await"
+      }}
     )
 
     return res.status(200).json({
