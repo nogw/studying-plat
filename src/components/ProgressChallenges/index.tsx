@@ -6,9 +6,11 @@ import { api } from '../../utils/api';
 import NProgress from 'nprogress'; 
 import { Empty } from '../CompletedChallenges/styles';
 import { useEffect, useState } from 'react';
+import { ImClock2 } from 'react-icons/im'
+import { FaTimes, FaCheck } from 'react-icons/fa'
 // import { useRouter } from 'next/router'
 
-function ChallengeItemList({ idChallenge, id, name, desc, challengesList, setChallengesList }) {
+function ChallengeItemList({ idChallenge, id, name, desc, status, challengesList, setChallengesList }) {
   // const Router = useRouter()
 
   const removeFromState = () => {
@@ -25,7 +27,7 @@ function ChallengeItemList({ idChallenge, id, name, desc, challengesList, setCha
 
     try {      
       const response: any = await api.post(`/challenge/user/leave`, {
-        userId: "6160e47eef372319884f034c",
+        userId: "6160db7f7c09f23da4f17aee",
         challengeId: id,
       })
       NProgress.done();
@@ -40,8 +42,24 @@ function ChallengeItemList({ idChallenge, id, name, desc, challengesList, setCha
   return (
     <Item>
       <Link href={`/desafio/${idChallenge}`}>
-        <ItemList>
-          <div className="circle"/>
+        <ItemList status={status}>
+          <div className="circle">
+            {
+              status == "await" && (
+                <FaCheck className="icon"/>
+              )
+            }
+            {
+              status == "in progress" && (
+                <ImClock2 className="icon"/>
+              )
+            }
+            {
+              status == false && (
+                <FaTimes className="icon false"/>
+              )
+            }
+          </div>
           <div className="texts">
             <h2>{name}</h2>
             <h5>{desc}</h5>
@@ -74,6 +92,7 @@ function ProgressChallenges({ challenges }) {
                       name={c.title}
                       desc={c.description}
                       idChallenge={c.idChallenge}
+                      status={c.approved}
                       setChallengesList={setChallengesList}
                       challengesList={challengesList}
                     />

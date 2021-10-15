@@ -39,7 +39,24 @@ export const Container = styled.div`
   }
 `;
 
-export const ItemList = styled.div`
+type ItemListProps = {
+  status: string | boolean
+}
+
+const handleChoiceColor = status => {
+  switch (status) {
+    case "await":
+      return "#e8f26d"
+    case "in progress":
+      return "#768BD4"
+    case false:
+      return "#d47676"
+    default:
+      return "#768BD4"
+  }
+}
+
+export const ItemList = styled.div<ItemListProps>`
   display: flex;
   align-items: center;
   position: relative;
@@ -63,10 +80,21 @@ export const ItemList = styled.div`
   }
 
   .circle {
-    background-color: #768BD4;
+    background-color: ${({ status }) => handleChoiceColor(status)};
     height: 36px;
     width: 36px;
     border-radius: 12px;
     margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .icon {
+      color: #26282b;
+    }
+
+    .false {
+      font-size: 20px;
+    }
   }
 `;
