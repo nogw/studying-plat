@@ -3,17 +3,14 @@ import ChallengeAdmin, { ISchemaChallengeAdmin } from '../models/challenge.admin
 import challengeUserModel from '../models/challenge.user.model'
 import userModel from '../models/user.model'
 
-const isAdmin = (req: Request) => {
-  return req.body.token_payload.permission === "admin"
+const isAdmin = (req: Request, res: Response) => {
+  const permission = req.body.token_payload.permission == "admin"
+  if (!permission) {
+    return res.redirect("/connect")
+  }
 }
 
 const createChallenge = async (req: Request, res: Response) => {
-  // if (!isAdmin(req)) {
-  //   return res.status(403).json({
-  //     error: "You need to be an administrator to create challenges"
-  //   })
-  // }
-  
   try {
     const challenge = new ChallengeAdmin({
       title: req.body.title,
@@ -36,14 +33,16 @@ const createChallenge = async (req: Request, res: Response) => {
   }
 }
 
-const listChallengesToApprove = async (req: Request, res: Response) => {
+const listChallengesToApprove = async (_: Request, res: Response) => {
   try {
     const listExistingChallenges = await challengeUserModel.find({}).select({"_id": 1, "userId": 1, "challengeId": 1, "time": 1}).sort({ createdAt: 'desc'}).exec()
+
     if (!listExistingChallenges) {
       return res.status(404).json({
         error: "No challenge created."
       })
     }
+    
     return res.status(200).json({
       message: listExistingChallenges
     })
