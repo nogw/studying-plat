@@ -7,6 +7,7 @@ import 'nprogress/nprogress.css';
 NProgress.configure({ showSpinner: false });
 import Router from "next/router";
 import { useEffect } from 'react';
+import { AuthProvider } from '../src/context/AuthContext';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -73,9 +74,9 @@ export default function App({ Component, pageProps }) {
   }, []);
 
   return (
-    <>
+    <AuthProvider>
       <GlobalStyle />
       <Component {...pageProps} />
-    </>
+    </AuthProvider>
   )
 }

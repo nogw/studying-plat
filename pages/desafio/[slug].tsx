@@ -2,6 +2,8 @@ import Layout from '../../src/components/Layout'
 import Challenge from '../../src/components/Challenge'
 import { api } from '../../src/utils/api';
 import { GetServerSideProps } from 'next';
+import nookies from 'nookies'
+import jwt from 'jsonwebtoken'
 
 export default function SlugTsx({ challenge, solution }: { challenge: any, solution?: any }) {
   return (
@@ -14,9 +16,13 @@ export default function SlugTsx({ challenge, solution }: { challenge: any, solut
 }
 
 export const getServerSideProps: GetServerSideProps = async ( ctx ) => {
+  const { "py.plat.user.id": cookies }  = nookies.get(ctx)
+  const decode: any = jwt.decode(cookies)
   const { slug } = ctx.query
   const response: any = await api.get(`/challenge/admin/get/${slug}`)
-  const responseSolution: any = await api.get(`/challenge/user/challenge/6160e47eef372319884f034c/${slug}`)
+  const responseSolution: any = await api.get(`/challenge/user/challenge/${decode.id}/${slug}`)
+
+  console.log(responseSolution.data.message)
 
   if (!response) {
     return {

@@ -2,6 +2,8 @@ import { GetServerSideProps } from 'next';
 import Layout from '../src/components/Layout'
 import CompletedChallenges from '../src/components/CompletedChallenges'
 import { api } from '../src/utils/api';
+import nookies from 'nookies'
+import jwt from 'jsonwebtoken'
 
 function Completos({ challenges }) {
   return (
@@ -11,8 +13,10 @@ function Completos({ challenges }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const response: any = await api.get(`/challenge/user/challenges/6160e47eef372319884f034c`)
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { "py.plat.user.id": cookies }  = nookies.get(ctx)
+  const decode: any = jwt.decode(cookies)
+  const response: any = await api.get(`/challenge/user/challenges/${decode.id}`)
   const challenges = response.data.message[0].completedChallenges
   console.log(challenges)
 
