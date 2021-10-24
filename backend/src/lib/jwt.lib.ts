@@ -6,22 +6,16 @@ const encode = (payload: string | JwtPayload) => {
   })
 }
 
-const decode = async (bearer_token: string) => {
+const decode = async (token: string) => {
   try {
-    const [token] = bearer_token.split(" ")
     const payload = await jwt.verify(token, process.env.JWT as string)
     return payload
-  } catch (err) {
-    return {}
+  } catch (err: any) {
+    throw new Error(err);
   }
-}
-
-const refresh = async (token: string) => {
-  encode(await decode(token))
 }
 
 export default {
   decode,
-  encode,
-  refresh
+  encode
 }

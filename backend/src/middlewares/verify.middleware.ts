@@ -6,8 +6,8 @@ export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
   console.log(req.body.token_payload.permission)
 
   if (!permission) {
-    return res.status(200).json({
-      message: permission
+    return res.status(400).json({
+      message: "you need to be admin for this"
     })
   }
 

@@ -58,6 +58,10 @@ const userSchema = new Schema<ISchemaUser>(
       type: String,
       default: "user"
     },
+    refreshToken: {
+      type: String,
+      required: false
+    },
     completedChallenges: [ChallengesSchema],
     inProgressChallenges: [ChallengesSchema]
   }
