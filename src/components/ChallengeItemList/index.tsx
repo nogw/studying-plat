@@ -10,7 +10,7 @@ function ChallengeItemList({ id, name, desc }) {
     try {
       NProgress.start();
       await api.post(`/challenge/user/start`, {
-        userId: "6160e47eef372319884f034c",
+        userId: "6160db7f7c09f23da4f17aee",
         challengeId: id,
       })
       NProgress.done();
